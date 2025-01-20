@@ -1,0 +1,3 @@
+source ~/.bashrc
+#my_named_nohup update_data_train_epoch_2 bash run_multi_task_4_with_speech.sh
+my_named_nohup emotion_only bash run_multi_task_4_with_speech.sh

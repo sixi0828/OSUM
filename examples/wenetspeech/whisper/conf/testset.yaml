@@ -1,0 +1,9 @@
+age: <TRANSCRIBE> <AGE>
+align: <TRANSCRIBE> <ALIGN>
+gender: <TRANSCRIBE> <GENDER>
+caption: <TRANSCRIBE> <CAPTION>
+chat: <S2TCHAT>
+emotion: <TRANSCRIBE> <EMOTION>
+style: <TRANSCRIBE> <STYLE>
+speech_token: <TRANSCRIBE> <SPEECH_TOKEN>
+

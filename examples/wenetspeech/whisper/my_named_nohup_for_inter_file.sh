@@ -1,0 +1,3 @@
+source ~/.bashrc
+my_named_nohup multi_special_sets_epoch_2 bash inter_special_sets_gxl.sh
+# my_named_nohup multi_special_sets2_epoch_7 bash inter_special_sets_gxl_2.sh

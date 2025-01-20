@@ -1,0 +1,13 @@
+{
+    "task": "tensor",
+    "dump_path": "./dump/npu",
+    "rank": [0],
+    "step": [0],
+    "level": "L1",
+
+    "tensor": {
+        "scope": [],
+        "list":[],
+        "data_mode": ["all"]
+    }
+}

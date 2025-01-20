@@ -1,0 +1,51 @@
+asr:
+  path: "/home/node54_tmpdata/yzli/wenet_whisper_finetune/examples/wenetspeech/whisper/data/multi_task_02_asr/asr.list"
+  weight: 1  # ~7000h
+emotion:
+  path: "/home/node54_tmpdata/yzli/wenet_whisper_finetune/examples/wenetspeech/whisper/data/multi_task_01/emotion.list"
+  weight: 1  # 538h
+caption:
+  path: "/home/node54_tmpdata/yzli/wenet_whisper_finetune/examples/wenetspeech/whisper/data/multi_task_01/caption.list"
+  weight: 2 # 113.7h 太少重复一遍
+chat:
+  path: "/home/node54_tmpdata/xlgeng/chat_data/shards/shards_list.txt"
+  weight: 1 # 200h
+age:
+  path: "/home/node54_tmpdata/yzli/wenet_whisper_finetune/examples/wenetspeech/whisper/data/multi_task_01/age.list"
+  weight: 1 # 2500h
+gender:
+  path: "/home/node54_tmpdata/yzli/wenet_whisper_finetune/examples/wenetspeech/whisper/data/multi_task_01/gender.list"
+  weight: 1 # 2500h
+background:
+  path: "/home/node54_tmpdata/yzli/wenet_whisper_finetune/examples/wenetspeech/whisper/data/multi_task_01/background.list"
+  weight: 1 # 1100h
+align:
+  path: "/home/node54_tmpdata/yzli/wenet_whisper_finetune/examples/wenetspeech/whisper/data/multi_task_02/align.list"
+  weight: 1 # ~3000h + ~2000h
+emotion_stage2_add:
+  path: "/home/node54_tmpdata/yhdai/multi_task_stage021/Speech_emotion_style/emotion/shards_labeling_1/shards_list.txt"
+  weight: 1 # 150h
+style:
+  path: "/home/node54_tmpdata/yzli/wenet_whisper_finetune/examples/wenetspeech/whisper/data/multi_task_02/style.list"
+  weight: 1 # 1512h
+caption_stage2_add:
+  path: "/home/work_nfs11/yacao/audio_tagging_wjtian/shards/Audio_Caption/shards_list.txt"
+  weight: 2 # 67.3h 太少重复一遍
+background_stage2_add:
+  path: "/home/node54_tmpdata/yzli/wenet_whisper_finetune/examples/wenetspeech/whisper/data/multi_task_02/background.list"
+  weight: 1 # 700h
+age_stage2_add:
+  path: "/home/node54_tmpdata/yhdai/multi_task_stage021/Speech_Age_Sex/age/shards_list.txt"
+  weight: 1 # xxxh
+gender_stage2_add:
+  path: "/home/node54_tmpdata/yhdai/multi_task_stage021/mix_task/Speech_Age_Sex/age_sex/shards_list.txt"
+  weight: 1 # xxxh
+chat_stage2_add:
+  path: "/home/node54_tmpdata/xlgeng/chat_data/web_text_2019_text/common_format/train_20W_1/shards/shards.list"
+  weight: 1 # 200h
+sot:
+  path: "/home/node54_tmpdata/xlgeng/sot_data_new/shards_list.txt"
+  weight: 1 # 2720h
+age_gender:
+  path: "/home/node54_tmpdata/yhdai/multi_task_stage021/mix_task/Speech_Age_Sex/age_sex/shards_list.txt"
+  weight: 1 # ~100h

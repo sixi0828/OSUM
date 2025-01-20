@@ -1,0 +1,152 @@
+引入.bashrc成功
+传入的参数为:
+data_type is raw
+test_sets is age/split_8/index_2---age/child/split_8/index_2
+test_data_dir is /home/node54_tmpdata/xlgeng/code/wenet_whisper_finetune_xlgeng/examples/wenetspeech/whisper/data/test_sets
+gpu_id is 2
+dir is /home/node54_tmpdata/xlgeng/ckpt/wenet_whisper_finetune/qwen2_multi_task_3_6gpus_gxl_adapter
+ckpt_name is epoch_6.pt
+task is <TRANSCRIBE><AGE>
+lang is zh
+print over
+prompt_fileconf/prompt_stage3.yaml
+待推理的数据集为:age/split_8/index_2 age/child/split_8/index_2
+CUDA_VISIBLE_DEVICES is 2
+data_type 为 raw
+test_data is /home/node54_tmpdata/xlgeng/code/wenet_whisper_finetune_xlgeng/examples/wenetspeech/whisper/data/test_sets/age/split_8/index_2/data.list
+lang is zh
+Traceback (most recent call last):
+  File "/home/node54_tmpdata/xlgeng/code/wenet_whisper_finetune_xlgeng/examples/wenetspeech/whisper/wenet/bin/recognize4llmasr.py", line 27, in <module>
+    from wenet.dataset.dataset import Dataset
+  File "/home/node54_tmpdata/xlgeng/code/wenet_whisper_finetune_xlgeng/wenet/dataset/dataset.py", line 21, in <module>
+    import wenet.dataset.deprecated.processor as processor
+  File "/home/node54_tmpdata/xlgeng/code/wenet_whisper_finetune_xlgeng/wenet/dataset/deprecated/processor.py", line 32, in <module>
+    torchaudio.utils.sox_utils.set_buffer_size(16500)
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/utils/sox_utils.py", line 50, in set_buffer_size
+    sox_ext.set_buffer_size(buffer_size)
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/_extension/utils.py", line 121, in __getattr__
+    self._import_once()
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/_extension/utils.py", line 135, in _import_once
+    self.module = self.import_func()
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/_extension/utils.py", line 85, in _init_sox
+    ext = _import_sox_ext()
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/_extension/utils.py", line 80, in _import_sox_ext
+    _load_lib("libtorchaudio_sox")
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/_extension/utils.py", line 60, in _load_lib
+    torch.ops.load_library(path)
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torch/_ops.py", line 933, in load_library
+    ctypes.CDLL(path)
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/ctypes/__init__.py", line 374, in __init__
+    self._handle = _dlopen(self._name, mode)
+OSError: /home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/lib/libtorchaudio_sox.so: undefined symbol: sox_open_write
+gxl_decode/decode_common_gxl.sh: line 100: /home/node54_tmpdata/xlgeng/ckpt/wenet_whisper_finetune/qwen2_multi_task_3_6gpus_gxl_adapter/age/split_8/index_2_epoch_6.pt_chunk-1_ctc0_reverse0.0_blankpenalty0.0_lengthpenalty0.0/llmasr_decode/wer: No such file or directory
+data_type 为 raw
+test_data is /home/node54_tmpdata/xlgeng/code/wenet_whisper_finetune_xlgeng/examples/wenetspeech/whisper/data/test_sets/age/child/split_8/index_2/data.list
+lang is zh
+Traceback (most recent call last):
+  File "/home/node54_tmpdata/xlgeng/code/wenet_whisper_finetune_xlgeng/examples/wenetspeech/whisper/wenet/bin/recognize4llmasr.py", line 27, in <module>
+    from wenet.dataset.dataset import Dataset
+  File "/home/node54_tmpdata/xlgeng/code/wenet_whisper_finetune_xlgeng/wenet/dataset/dataset.py", line 21, in <module>
+    import wenet.dataset.deprecated.processor as processor
+  File "/home/node54_tmpdata/xlgeng/code/wenet_whisper_finetune_xlgeng/wenet/dataset/deprecated/processor.py", line 32, in <module>
+    torchaudio.utils.sox_utils.set_buffer_size(16500)
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/utils/sox_utils.py", line 50, in set_buffer_size
+    sox_ext.set_buffer_size(buffer_size)
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/_extension/utils.py", line 121, in __getattr__
+    self._import_once()
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/_extension/utils.py", line 135, in _import_once
+    self.module = self.import_func()
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/_extension/utils.py", line 85, in _init_sox
+    ext = _import_sox_ext()
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/_extension/utils.py", line 80, in _import_sox_ext
+    _load_lib("libtorchaudio_sox")
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/_extension/utils.py", line 60, in _load_lib
+    torch.ops.load_library(path)
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torch/_ops.py", line 933, in load_library
+    ctypes.CDLL(path)
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/ctypes/__init__.py", line 374, in __init__
+    self._handle = _dlopen(self._name, mode)
+OSError: /home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/lib/libtorchaudio_sox.so: undefined symbol: sox_open_write
+gxl_decode/decode_common_gxl.sh: line 100: /home/node54_tmpdata/xlgeng/ckpt/wenet_whisper_finetune/qwen2_multi_task_3_6gpus_gxl_adapter/age/child/split_8/index_2_epoch_6.pt_chunk-1_ctc0_reverse0.0_blankpenalty0.0_lengthpenalty0.0/llmasr_decode/wer: No such file or directory
+传入的参数为:
+data_type is raw
+test_sets is emotion/split_8/index_2
+test_data_dir is /home/node54_tmpdata/xlgeng/code/wenet_whisper_finetune_xlgeng/examples/wenetspeech/whisper/data/test_sets
+gpu_id is 2
+dir is /home/node54_tmpdata/xlgeng/ckpt/wenet_whisper_finetune/qwen2_multi_task_3_6gpus_gxl_adapter
+ckpt_name is epoch_6.pt
+task is <TRANSCRIBE><EMOTION>
+lang is zh
+print over
+prompt_fileconf/prompt_stage3.yaml
+待推理的数据集为:emotion/split_8/index_2
+CUDA_VISIBLE_DEVICES is 2
+data_type 为 raw
+test_data is /home/node54_tmpdata/xlgeng/code/wenet_whisper_finetune_xlgeng/examples/wenetspeech/whisper/data/test_sets/emotion/split_8/index_2/data.list
+lang is zh
+Traceback (most recent call last):
+  File "/home/node54_tmpdata/xlgeng/code/wenet_whisper_finetune_xlgeng/examples/wenetspeech/whisper/wenet/bin/recognize4llmasr.py", line 27, in <module>
+    from wenet.dataset.dataset import Dataset
+  File "/home/node54_tmpdata/xlgeng/code/wenet_whisper_finetune_xlgeng/wenet/dataset/dataset.py", line 21, in <module>
+    import wenet.dataset.deprecated.processor as processor
+  File "/home/node54_tmpdata/xlgeng/code/wenet_whisper_finetune_xlgeng/wenet/dataset/deprecated/processor.py", line 32, in <module>
+    torchaudio.utils.sox_utils.set_buffer_size(16500)
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/utils/sox_utils.py", line 50, in set_buffer_size
+    sox_ext.set_buffer_size(buffer_size)
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/_extension/utils.py", line 121, in __getattr__
+    self._import_once()
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/_extension/utils.py", line 135, in _import_once
+    self.module = self.import_func()
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/_extension/utils.py", line 85, in _init_sox
+    ext = _import_sox_ext()
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/_extension/utils.py", line 80, in _import_sox_ext
+    _load_lib("libtorchaudio_sox")
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/_extension/utils.py", line 60, in _load_lib
+    torch.ops.load_library(path)
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torch/_ops.py", line 933, in load_library
+    ctypes.CDLL(path)
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/ctypes/__init__.py", line 374, in __init__
+    self._handle = _dlopen(self._name, mode)
+OSError: /home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/lib/libtorchaudio_sox.so: undefined symbol: sox_open_write
+gxl_decode/decode_common_gxl.sh: line 100: /home/node54_tmpdata/xlgeng/ckpt/wenet_whisper_finetune/qwen2_multi_task_3_6gpus_gxl_adapter/emotion/split_8/index_2_epoch_6.pt_chunk-1_ctc0_reverse0.0_blankpenalty0.0_lengthpenalty0.0/llmasr_decode/wer: No such file or directory
+传入的参数为:
+data_type is raw
+test_sets is gender/split_8/index_2
+test_data_dir is /home/node54_tmpdata/xlgeng/code/wenet_whisper_finetune_xlgeng/examples/wenetspeech/whisper/data/test_sets
+gpu_id is 2
+dir is /home/node54_tmpdata/xlgeng/ckpt/wenet_whisper_finetune/qwen2_multi_task_3_6gpus_gxl_adapter
+ckpt_name is epoch_6.pt
+task is <TRANSCRIBE><GENDER>
+lang is zh
+print over
+prompt_fileconf/prompt_stage3.yaml
+待推理的数据集为:gender/split_8/index_2
+CUDA_VISIBLE_DEVICES is 2
+data_type 为 raw
+test_data is /home/node54_tmpdata/xlgeng/code/wenet_whisper_finetune_xlgeng/examples/wenetspeech/whisper/data/test_sets/gender/split_8/index_2/data.list
+lang is zh
+Traceback (most recent call last):
+  File "/home/node54_tmpdata/xlgeng/code/wenet_whisper_finetune_xlgeng/examples/wenetspeech/whisper/wenet/bin/recognize4llmasr.py", line 27, in <module>
+    from wenet.dataset.dataset import Dataset
+  File "/home/node54_tmpdata/xlgeng/code/wenet_whisper_finetune_xlgeng/wenet/dataset/dataset.py", line 21, in <module>
+    import wenet.dataset.deprecated.processor as processor
+  File "/home/node54_tmpdata/xlgeng/code/wenet_whisper_finetune_xlgeng/wenet/dataset/deprecated/processor.py", line 32, in <module>
+    torchaudio.utils.sox_utils.set_buffer_size(16500)
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/utils/sox_utils.py", line 50, in set_buffer_size
+    sox_ext.set_buffer_size(buffer_size)
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/_extension/utils.py", line 121, in __getattr__
+    self._import_once()
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/_extension/utils.py", line 135, in _import_once
+    self.module = self.import_func()
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/_extension/utils.py", line 85, in _init_sox
+    ext = _import_sox_ext()
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/_extension/utils.py", line 80, in _import_sox_ext
+    _load_lib("libtorchaudio_sox")
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/_extension/utils.py", line 60, in _load_lib
+    torch.ops.load_library(path)
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torch/_ops.py", line 933, in load_library
+    ctypes.CDLL(path)
+  File "/home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/ctypes/__init__.py", line 374, in __init__
+    self._handle = _dlopen(self._name, mode)
+OSError: /home/work_nfs11/code/xlgeng/environment/miniconda/lib/python3.10/site-packages/torchaudio/lib/libtorchaudio_sox.so: undefined symbol: sox_open_write
+gxl_decode/decode_common_gxl.sh: line 100: /home/node54_tmpdata/xlgeng/ckpt/wenet_whisper_finetune/qwen2_multi_task_3_6gpus_gxl_adapter/gender/split_8/index_2_epoch_6.pt_chunk-1_ctc0_reverse0.0_blankpenalty0.0_lengthpenalty0.0/llmasr_decode/wer: No such file or directory

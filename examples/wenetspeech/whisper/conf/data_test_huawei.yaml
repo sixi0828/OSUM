@@ -1,0 +1,4 @@
+asr:
+  path: "/home/image_data/shards_list_asr.list"
+  weight: 100  # 2.3W h
+

@@ -1,0 +1,3 @@
+speech_token:
+  path: '/home/node54_tmpdata2/data4understand/asr_token/shards_list.txt' # 250h
+  weight: 100
