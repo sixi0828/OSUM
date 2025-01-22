@@ -35,6 +35,12 @@ The overview of the architecture and tasks of OSUM.
 <br>
 
 ## Evaluation
+ Comparison of Qwen2-Audio and our OSUM model. In most tasks, OSUM achieves a better
+performance than Qwen2-Audio despite using significantly fewer computational resources and training data.
+<p align="center">
+    <img src="images/figure1.png" width="70%"/>
+<p>
+
 Evaluation results of ASR tasks on public and internal test sets. The bold font represents the best
 result among the same test set. All internal results are inferred by ourselves.
 <p align="center">
