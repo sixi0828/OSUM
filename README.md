@@ -22,10 +22,10 @@ Our goal is to foster transparency and accelerate SULM research by providing acc
 
 ## Architecture
 
-The overview of three-stage training process of Qwen2-Audio.
+The overview of the architecture and tasks of OSUM.
 
 <p align="center">
-    <img src="assets/framework.png" width="80%"/>
+    <img src="images/Architecture.png" width="80%"/>
 <p>
 
 ## News and Updates
