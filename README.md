@@ -14,12 +14,11 @@ OSUM <a href=""> 敬请期待</a> </a>&nbsp
 </p>
 
 
-We introduce the latest progress of Qwen-Audio, a large-scale audio-language model called Qwen2-Audio, which is capable of accepting various audio signal inputs and performing audio analysis or direct textual responses with regard to speech instructions. We introduce two distinct audio interaction modes:
+We present OSUM, an open-source SULM designed to encourage broader research participation with minimal resource requirements. OSUM integrates a Whisper speech encoder, fine-tuned on a multi-task dataset, with a Qwen2 LLM. It supports various speech tasks, including <b>ASR</b>, <b>SRWT</b>, <b>VED</b>, <b>SER</b>, <b>SSR</b>, <b>SGC</b>, <b>SAP</b>, and <b>STTC</b>. Notably, <b>SSR</b> enhances speech generation by ensuring appropriate styles for natural interactions.  
 
-* voice chat: users can freely engage in voice interactions with Qwen2-Audio without text input;
-* audio analysis: users could provide audio and text instructions for analysis during the interaction;
+To improve training efficiency and stability, we adopt an ASR+X strategy, where an auxiliary ASR task is trained alongside the primary task (X), accelerating modality alignment between text and audio. OSUM uses 44,100 hours of training data and achieves competitive performance. It is trained on Nvidia A6000 GPUs and Huawei Ascend NPUs, supporting inference on both platforms.  
 
-**We've released two models of the Qwen2-Audio series: Qwen2-Audio-7B and Qwen2-Audio-7B-Instruct.**
+Our goal is to foster transparency and accelerate SULM research by providing accessible tools and resources to the community.
 
 ## Architecture
 
