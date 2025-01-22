@@ -29,9 +29,8 @@ The overview of the architecture and tasks of OSUM.
 <p>
 
 ## News and Updates
-* 2024.8.9 🎉 We released the checkpoints of both `Qwen2-Audio-7B` and `Qwen2-Audio-7B-Instruct` on ModelScope and Hugging Face.
-* 2024.7.15 🎉 We released the paper of **Qwen2-Audio**, introducing the relevant model structure, training methods, and model performance. Check our [report](https://arxiv.org/abs/2407.10759) for details!
-* 2023.11.30 🔥  We released the **Qwen-Audio** series.
+* 2024.1.24 🎉 We released the checkpoints of OSUM on ModelScope and Hugging Face.
+
 
 <br>
 
