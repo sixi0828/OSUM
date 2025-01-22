@@ -49,7 +49,7 @@ using the original released model by ourselves.
     <img src="images/table5-part1.png" width="70%"/>
 <p>
 <p align="center">
-    <img src="images/table5-part2.png" width="80%"/>
+    <img src="images/table5-part2.png" width="60%"/>
 <p>
 
 The details of evaluation are as follows:
