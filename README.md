@@ -1,4 +1,4 @@
-<p align="left">
+ <p align="left">
         <a href="README_CN.md">中文</a> &nbsp｜ &nbsp English&nbsp&nbsp
 </p>
 <br><br>
@@ -8,9 +8,9 @@
 <p>
 
 <p align="center">
-Qwen2-Audio-7B <a href="https://modelscope.cn/models/qwen/Qwen2-Audio-7B">🤖 </a> | <a href="https://huggingface.co/Qwen/Qwen2-Audio-7B">🤗</a>&nbsp ｜ Qwen-Audio-7B-Instruct <a href="https://modelscope.cn/models/qwen/Qwen2-Audio-7B-Instruct">🤖 </a>| <a href="https://huggingface.co/Qwen/Qwen2-Audio-7B-Instruct">🤗</a>&nbsp ｜ Demo<a href="https://modelscope.cn/studios/qwen/Qwen2-Audio-Instruct-Demo"> 🤖</a> | <a href="https://huggingface.co/spaces/Qwen/Qwen2-Audio-Instruct-Demo">🤗</a>&nbsp
+OSUM <a href=""> 敬请期待</a> </a>&nbsp
 <br>
-📑 <a href="https://arxiv.org/abs/2407.10759">Paper</a> &nbsp&nbsp | &nbsp&nbsp 📑 <a href="https://qwenlm.github.io/blog/qwen2-audio">Blog</a> &nbsp&nbsp | &nbsp&nbsp 💬 <a href="https://github.com/QwenLM/Qwen/blob/main/assets/wechat.png">WeChat (微信)</a>&nbsp&nbsp | &nbsp&nbsp <a href="https://discord.gg/CV4E9rpNSD">Discord</a>&nbsp&nbsp
+📑 <a href="">Paper</a> &nbsp&nbsp | &nbsp&nbsp 📑 <a href="https://github.com/ASLP-lab/OSUM.githup.io">Blog</a> &nbsp&nbsp | &nbsp&nbsp 💬 <a href="https://github.com/QwenLM/Qwen/blob/main/assets/wechat.png">WeChat (微信)</a>&nbsp&nbsp | &nbsp&nbsp <a href="https://discord.gg/CV4E9rpNSD">Discord</a>&nbsp&nbsp
 </p>
 
 
