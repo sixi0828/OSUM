@@ -35,14 +35,21 @@ The overview of the architecture and tasks of OSUM.
 <br>
 
 ## Evaluation
-We evaluated the Qwen2-Audio's abilities on 13 standard benchmarks as follows:
-<table><thead><tr><th>Task</th><th>Description</th><th>Dataset</th><th>Split</th><th>Metric</th></tr></thead><tbody><tr><td rowspan="4">ASR</td><td rowspan="4">Automatic Speech Recognition</td><td>Fleurs</td><td>dev | test</td><td rowspan="4">WER</td></tr><tr><td>Aishell2</td><td>test</td></tr><tr><td>Librispeech</td><td>dev | test</td></tr><tr><td>Common Voice</td><td>dev | test</td></tr><tr><td>S2TT</td><td>Speech-to-Text Translation</td><td>CoVoST2</td><td>test</td><td>BLEU </td></tr><tr><td>SER</td><td>Speech Emotion Recognition</td><td>Meld</td><td>test</td><td>ACC</td></tr><tr><td>VSC</td><td>Vocal Sound Classification</td><td>VocalSound</td><td>test</td><td>ACC</td></tr><tr><td rowspan="4"><a href="https://github.com/OFA-Sys/AIR-Bench">AIR-Bench</a><br></td><td>Chat-Benchmark-Speech</td><td>Fisher<br>SpokenWOZ<br>IEMOCAP<br>Common voice</td><td>dev | test</td><td>GPT-4 Eval</td></tr><tr><td>Chat-Benchmark-Sound</td><td>Clotho</td><td>dev | test</td><td>GPT-4 Eval</td></tr>
-<tr><td>Chat-Benchmark-Music</td><td>MusicCaps</td><td>dev | test</td><td>GPT-4 Eval</td></tr><tr><td>Chat-Benchmark-Mixed-Audio</td><td>Common voice<br>AudioCaps<br>MusicCaps</td><td>dev | test</td><td>GPT-4 Eval</td></tr></tbody></table>
-
-
-The below is the overal performance:
+Evaluation results of ASR tasks on public and internal test sets. The bold font represents the best
+result among the same test set. All internal results are inferred by ourselves.
 <p align="center">
-    <img src="assets/radar_compare_qwen_audio.png" width="70%"/>
+    <img src="images/table4.png" width="70%"/>
+<p>
+
+
+Evaluation results of multi-tasking on public and internal test sets. The best results for each test set
+are highlighted in bold font. Results shown in blue font, as well as those on internal test sets, are inferred
+using the original released model by ourselves.
+<p align="center">
+    <img src="images/table5-part1.png" width="70%"/>
+<p>
+<p align="center">
+    <img src="images/table5-part2.png" width="80%"/>
 <p>
 
 The details of evaluation are as follows:
