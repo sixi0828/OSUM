@@ -59,23 +59,10 @@ pip install requirements_little.txt
 ```
 
 ## Quickstart
-
-##### Audio Analysis Inference
-
-
-
-#### 🤖 ModelScope
-We strongly advise users especially those in mainland China to use ModelScope. `snapshot_download` can help you solve issues concerning downloading checkpoints.
 ## Demo
 ### Web UI
 
-
-## demos 
-More impressive cases will be updated on our blog at [Qwen's blog](https://qwenlm.github.io/blog/qwen2-audio).
-
 ## Citation
-
-
 
 ## Contact Us
 
