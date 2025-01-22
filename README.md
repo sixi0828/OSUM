@@ -4,7 +4,7 @@
 <br><br>
 
 <p align="center">
-    <img src="https://qianwen-res.oss-cn-beijing.aliyuncs.com/assets/blog/qwenaudio/qwen2audio_logo.png" width="400"/>
+    <img src="images/ASLP.png" width="400"/>
 <p>
 
 <p align="center">
