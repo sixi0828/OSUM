@@ -25,7 +25,7 @@ OSUM <a href=""> 敬请期待</a> </a>&nbsp
 OSUM的架构与任务概述。
 
 <p align="center">
- <iframe src="images/system.pdf#page=1" width="70%" height="500px"></iframe>
+    <img src="images/Architecture.png" width="90%"/>
 <p>
 
 ## News and Updates
@@ -37,20 +37,21 @@ OSUM的架构与任务概述。
 ## Evaluation
 Qwen2-Audio 和我们的 OSUM 模型比较。在大多数任务中，尽管 OSUM 使用的计算资源和训练数据明显更少，但它的表现优于 Qwen2-Audio。
 <p align="center">
-    <img src="images/radar.pdf" width="70%"/>
+    <img src="images/figure1.png" width="80%"/>
 <p>
+
 在公共和内部测试集上的 ASR 任务评估结果中，加粗字体表示同一测试集中的最佳结果。所有内部测试结果均由我们自行推理得出。
 
 
 <p align="center">
-    <img src="images/res_asr.pdf" width="70%"/>
+    <img src="images/table4.png" width="90%"/>
 <p>
-
 
 在公共和内部测试集上的多任务评估结果中，每个测试集的最佳结果均以加粗字体突出显示。以蓝色字体显示的结果以及内部测试集上的结果，均使用我们自行推理的原始发布模型得出。
 <p align="center">
-    <img src="images/res_multi.pdf" width="50%"/>
+    <img src="images/table5.png" width="90%"/>
 <p>
+
 
 <!--  We have provided **all** evaluation scripts to reproduce our results. Please refer to [eval_audio/EVALUATION.md](eval_audio/EVALUATION.md) for details.
   --> 
