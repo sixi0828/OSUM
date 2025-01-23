@@ -61,12 +61,12 @@ Qwen2-Audio 和我们的 OSUM 模型比较。在大多数任务中，尽管 OSUM
 pip install requirements_little.txt
 ```
 
-## Quickstart
+<!--## Quickstart
 ## Demo
 ### Web UI
 
 ## Citation
-
+-->
 ## Contact Us
 
 如果您有兴趣向我们的研究团队或产品团队留言，欢迎发送电子邮件至 g3349495429@163.com。
