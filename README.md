@@ -63,13 +63,13 @@ using the original released model by ourselves.
 ```
 pip install requirements_little.txt
 ```
-
+<!-- 
 ## Quickstart
 ## Demo
 ### Web UI
 
 ## Citation
-
+ -->
 ## Contact Us
 
 If you are interested to leave a message to either our research team or product team, feel free to send an email to `g3349495429@163.com`.
