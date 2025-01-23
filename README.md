@@ -25,7 +25,7 @@ Our goal is to foster transparency and accelerate SULM research by providing acc
 The overview of the architecture and tasks of OSUM.
 
 <p align="center">
-    <img src="images/Architecture.png" width="90%"/>
+    <img src="images/system.png" width="80%"/>
 <p>
 
 ## News and Updates
@@ -38,13 +38,13 @@ The overview of the architecture and tasks of OSUM.
  Comparison of Qwen2-Audio and our OSUM model. In most tasks, OSUM achieves a better
 performance than Qwen2-Audio despite using significantly fewer computational resources and training data.
 <p align="center">
-    <img src="images/figure1.png" width="80%"/>
+    <img src="images/radar.png" width="80%"/>
 <p>
 
 Evaluation results of ASR tasks on public and internal test sets. The bold font represents the best
 result among the same test set. All internal results are inferred by ourselves.
 <p align="center">
-    <img src="images/table4.png" width="90%"/>
+    <img src="images/res_asr.png" width="80%"/>
 <p>
 
 
@@ -52,7 +52,7 @@ Evaluation results of multi-tasking on public and internal test sets. The best r
 are highlighted in bold font. Results shown in blue font, as well as those on internal test sets, are inferred
 using the original released model by ourselves.
 <p align="center">
-    <img src="images/table5.png" width="90%"/>
+    <img src="images/res_multi.png" width="80%"/>
 <p>
 
 <!--  We have provided **all** evaluation scripts to reproduce our results. Please refer to [eval_audio/EVALUATION.md](eval_audio/EVALUATION.md) for details.
