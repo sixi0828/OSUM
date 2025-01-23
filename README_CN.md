@@ -25,7 +25,7 @@ OSUM <a href=""> 敬请期待</a> </a>&nbsp
 OSUM的架构与任务概述。
 
 <p align="center">
-    <img src="images/system.pdf" width="80%"/>
+ <iframe src="images/system.pdf" width="70%" height="500px"></iframe>
 <p>
 
 ## News and Updates
