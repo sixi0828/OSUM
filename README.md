@@ -29,7 +29,7 @@ The overview of the architecture and tasks of OSUM.
 <p>
 
 ## News and Updates
-* 2024.1.28 🎉 We released the checkpoints of OSUM on ModelScope and Hugging Face.
+* Checkpoint and test page coming soon. Stay tuned!
 
 
 <br>
