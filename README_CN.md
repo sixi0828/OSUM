@@ -29,7 +29,7 @@ The overview of the architecture and tasks of OSUM.
 <p>
 
 ## News and Updates
-* 2024.1.24 🎉 我们已在 ModelScope 和 Hugging Face 上发布了 OSUM 的checkpoints。.
+* 2024.1.28 🎉 我们已在 ModelScope 和 Hugging Face 上发布了 OSUM 的checkpoints。.
 
 
 <br>
