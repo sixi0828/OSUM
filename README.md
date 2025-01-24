@@ -3,9 +3,6 @@
 </p>
 <br><br>
 
-<p align="center">
-    <img src="images/ASLP.jpg" width="400"/>
-<p>
 
 <p align="center">
 OSUM <a href=""> 敬请期待</a> </a>&nbsp
@@ -73,3 +70,7 @@ pip install requirements_little.txt
 ## Contact Us
 
 If you are interested to leave a message to either our research team or product team, feel free to send an email to `g3349495429@163.com`.
+
+<p align="center">
+    <img src="images/ASLP.jpg" width="400"/>
+<p>
