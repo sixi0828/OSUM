@@ -1,10 +1,17 @@
  <p align="left">
         <a href="README_CN.md">中文</a> &nbsp｜ &nbsp English&nbsp&nbsp
 </p>
-<br><br>
 <p align="center">
    <h1>OSUM: Advancing Open Speech Understanding Models with Limited Resources in Academia</h1>
 </p>
+**Xuelong Geng¹, Kun Wei¹, Qijie Shao¹, Shuiyun Liu*¹, Zhennan Lin*¹, Zhixian Zhao*¹, Guojian Li*¹, Wenjie Tian*¹, Peikun Chen¹, Yangze Li¹, Pengcheng Guo¹, Mingchen Shao¹, Shuiyuan Wang¹, Yuang Cao¹, Chengyou Wang¹, Tianyi Xu¹, Yuhang Dai¹, Xinfa Zhu¹, Yue Li¹, Li Zhang¹, Lei Xie†¹**  
+
+¹ *Audio, Speech and Language Processing Group (ASLP@NPU),  
+School of Computer Science, Northwestern Polytechnical University, Xi’an, China*  
+
+\* indicates equal contribution.  
+† indicates the corresponding author.
+
 
 <p align="center">
     <img src="images/SUM.png" width="400"/>
