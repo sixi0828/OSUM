@@ -68,7 +68,7 @@ pip install requirements_little.txt
  -->
 ## Contact Us
 
-If you are interested to leave a message to either our research team or product team, feel free to send an email to `g3349495429@163.com`.
+If you are interested to leave a message to either our research team or product team, feel free to send an email to `xlgeng@mail.nwpu.edu.cn`.
 
 <p align="center">
     <img src="images/ASLP.jpg" width="400"/>
