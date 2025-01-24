@@ -2,6 +2,9 @@
         <a href="README_CN.md">中文</a> &nbsp｜ &nbsp English&nbsp&nbsp
 </p>
 <br><br>
+<p align="center">
+    <img src="images/SU:M.png" width="400"/>
+<p>
 
 
 <p align="center">
