@@ -71,3 +71,6 @@ pip install requirements_little.txt
 ## Contact Us
 
 如果您有兴趣向我们的研究团队或产品团队留言，欢迎发送电子邮件至 g3349495429@163.com。
+<p align="center">
+    <img src="images/ASLP.jpg" width="400"/>
+<p>
