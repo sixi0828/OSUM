@@ -13,7 +13,6 @@ OSUM <a href=""> comming soon</a> </a>&nbsp
 📑 <a href="">Paper</a> &nbsp&nbsp | &nbsp&nbsp 📑 <a href="https://aslp-lab.github.io/OSUM.github.io/">Demo</a> &nbsp&nbsp | &nbsp&nbsp 💬 <a href="images/wechat.png">WeChat (微信)</a>&nbsp&nbsp 
 </p>
 
-
 Large Language Models (LLMs) have made significant progress in various downstream
 tasks, inspiring the development of Speech Understanding Language Models (SULMs) to
 enable comprehensive speech-based interactions. However, most advanced SULMs are developed by the industry, leveraging large-scale datasets and computational resources that
