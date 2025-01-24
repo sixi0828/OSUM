@@ -3,6 +3,10 @@
 </p>
 <br><br>
 <p align="center">
+   OSUM: Advancing Open Speech Understanding Models with Limited Resources in Academia
+<p>
+
+<p align="center">
     <img src="images/SUM.png" width="400"/>
 <p>
 
