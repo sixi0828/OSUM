@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/7dbd0fb0-d7e9-46aa-8c81-e97780ffdbff)<p align="left">
+<p align="left">
         <a >中文</a> &nbsp｜ &nbsp <a href="README.md">English</a>&nbsp&nbsp
 </p>
 <p align="center">
