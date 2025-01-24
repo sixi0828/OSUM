@@ -33,7 +33,7 @@ The overview of the architecture and tasks of OSUM.
 <p>
 
 ## News and Updates
-* Checkpoint and test page coming soon. Stay tuned!
+* Checkpoint and test page coming soon.
 
 
 <br>
