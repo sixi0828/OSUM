@@ -4,7 +4,7 @@
 <br><br>
 
 <p align="center">
-    <img src="images/ASLP.jpg" width="400"/>
+    <img src="images/SUM.png" width="400"/>
 <p>
 
 <p align="center">
