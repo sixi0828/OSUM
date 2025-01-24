@@ -5,7 +5,7 @@
 
 
 <p align="center">
-OSUM <a href=""> 敬请期待</a> </a>&nbsp
+OSUM <a href=""> comming soon</a> </a>&nbsp
 <br>
 📑 <a href="">Paper</a> &nbsp&nbsp | &nbsp&nbsp 📑 <a href="https://aslp-lab.github.io/OSUM.github.io/">Demo</a> &nbsp&nbsp | &nbsp&nbsp 💬 <a href="images/wechat.png">WeChat (微信)</a>&nbsp&nbsp 
 </p>
