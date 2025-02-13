@@ -1,0 +1,155 @@
+asr:
+  path: "/mnt/sfs/asr/asr/shards_list.txt" # 2.4
+  weight: 0.5  # ~10000h
+librispeech:
+  path: "/mnt/sfs/asr/update_data/LibriSpeech_shard_common/shards_list.txt" #1000h
+  weight: 0.5
+
+
+align:
+  path: "/mnt/sfs/asr/update_data/align/shards_list.txt" # 2.4W
+  weight: 0.166 #0.125 # ~3000h + ~2000h # 6000
+
+
+
+caption:
+  path: "/mnt/sfs/asr/update_data/caption/shards_list.txt" # 319h
+  weight: 2
+caption_add_2025_1_6:
+  path: "/mnt/sfs/asr/update_data/caption_2025_1_6_newadd/shards_list.txt" # 130h
+  weight: 2
+caption_aslp_add_2025_1_15:
+  path: "/mnt/sfs/asr/update_data/caption_aslp_add_2025_1_15/shards_list.txt" # 5h
+  weight: 5
+caption_esc50_add_2025_1_15:
+  path: "/mnt/sfs/asr/update_data/caption_esc50_add_2025_1_15/shards_list.txt" # 37h
+  weight: 5
+caption_nospeech_add_2025_1_15:
+  path: "/mnt/sfs/asr/update_data/caption_nospeech_add_2025_1_15/shards_list.txt" #210h
+  weight: 5
+caption_VocalSound_ourclass2_add_2025_1_15:
+  path: "/mnt/sfs/asr/update_data/caption_VocalSound_ourclass2_add_2025_1_15/shards_list.txt" # 175h
+  weight: 5 # 总量 876  2400h -> *5 = 12000h
+
+
+
+emotion:
+  path: "/mnt/sfs/asr/emotion/shards_list.txt"
+  weight: 1  # 538h
+emotion_stage2_add:
+  path: "/mnt/sfs/asr/emotion_stage2_add/shards_list.txt"
+  weight: 1 # 150h
+emotion_stage3_add:
+  path: "/mnt/sfs/asr/emotion_stage3_add/shards_list.txt"
+  weight: 1 # 138h
+emotion_stage4_add:
+  path: "/mnt/sfs/asr/emotion_stage4_add/shards_list.txt"
+  weight: 1 #100h
+emotion_stage5_add:
+  path: "/mnt/sfs/asr/emotion_stage5_add/shards_list.txt"
+  weight: 1
+emotion_meld:
+  path: "/mnt/sfs/asr/update_data/emotion_meld/shards_list.txt" # 8h
+  weight: 5
+emotion_dis_fear_add_2025_1_15:
+  path: "/mnt/sfs/asr/update_data/emotion_dis_fear_add_2025_1_15/shards_list.txt"
+  weight: 0
+
+
+
+style:
+  path: "/mnt/sfs/asr/style/shards_list.txt"
+  weight: 1 # 1512h
+style_stage3_add:
+  path: "/mnt/sfs/asr/style_stage3_add/shards_list.txt"
+  weight: 1 # 277.2h
+style_stage4_add:
+  path: "/mnt/sfs/asr/style_stage4_add/shards_list.txt"
+  weight: 1
+style_stage5_add:
+  path: "/mnt/sfs/asr/style_stage5_add/shards_list.txt"
+  weight: 1
+
+
+
+Age_with_noize_add_2025_2_4:
+  path: "/mnt/sfs/asr/update_data/Age_with_noize_add_2025_2_4/shards_list.txt"
+  weight: 1
+age:
+  path: "/mnt/sfs/asr/update_data/age/shards_list.txt"
+  weight: 1 #1.5  # 3000h
+
+
+gender:
+  path: "/mnt/sfs/asr/update_data/sex/shards_list.txt" # 3000 
+  weight: 1 #1.5
+gender_add_2025_1_6:
+  path: "/mnt/sfs/asr/update_data/sex_2025_1_6_newadd/shards_list.txt" # 107h, kaggle
+  weight: 3 #3
+gender_add_2025_2_4_fix: # 2100tar
+  path: "/mnt/sfs/asr/update_data/gender_add_2025_2_4_fix/shards_list.txt"
+  weight: 1
+gender_with_noize_add_2025_2_4: # 1500h  ,780tar
+  path: "/mnt/sfs/asr/update_data/gender_with_noize_add_2025_2_4/shards_list.txt"
+  weight: 1
+# Sex_aishell3_add_2025_1_15:
+#   path: "/mnt/sfs/asr/update_data/Sex_aishell3_add_2025_1_15/shards_list.txt"
+#   weight: 0
+
+
+# chat:
+#   path: "/mnt/sfs/asr/chat/shards_list.txt"
+#   weight: 2 # 200h
+# chat_stage5_add:
+#   path: "/mnt/sfs/asr/chat_stage5_add/shards_list.txt"
+#   weight: 2
+# chat_stage5_add_2:
+#   path: "/mnt/sfs/asr/chat_stage5_add_2/shards_list.txt"
+#   weight: 2
+# 2500h 
+# speech_token_chat:
+#   path: "/mnt/sfs/asr/update_data/3500_chat/shards_list.txt"
+#   weight: 0.5  #  chat任务整体翻倍，一版常规chat,一半asr+chat，现在全是asr-chat
+# # 对话任务的prompt值为空
+
+asr_chat_1:
+  path: "/mnt/sfs/asr/update_data/asr_chat_pkchen_2025-1-24/shards_list.txt"
+  weight: 1
+asr_chat_2:
+  path: "/mnt/sfs/asr/update_data/asr_chat_wenetspeech_enhance_2025-1-24/shards_list.txt"
+  weight: 1
+asr_chat_3:
+  path: "/mnt/sfs/asr/update_data/asr_chat_znlin_2025-1-24/shards_list.txt"
+  weight: 1
+
+
+age_gender_stage2_add:
+ path: "/mnt/sfs/asr/update_data/Speech_Age_Sex/shards_list.txt"
+ weight: 1 # 174h
+
+age_gender_add_2025_1_13:
+  path: "/mnt/sfs/asr/update_data/Speech_Age_Sex_add_2025_1_13/shards_list.txt"
+  weight: 1 #300
+
+style_age_gender_stage3_add:
+ path: "/mnt/sfs/asr/update_data/Speech_Style_Age_Sex/shards_list.txt"
+ weight: 1 # 85h
+
+
+age_gender_pure_stage3_add:
+ path: "/mnt/sfs/asr/update_data/Age_Sex/shards_list.txt"
+ weight: 1 # 174h
+
+
+style_age_gender_pure_stage3_add:
+ path: "/mnt/sfs/asr/update_data/Style_Age_Sex/shards_list.txt"
+ weight: 1 # 85h
+
+
+# speech_token_asr:
+#   path: "/mnt/sfs/asr/update_data/3500_asr/shards_list.txt"
+#   weight: 10
+
+# speech_token_chat:
+#   path: "/mnt/sfs/asr/update_data/3500_chat/shards_list.txt"
+#   weight: 10

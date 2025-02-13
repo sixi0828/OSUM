@@ -18,7 +18,7 @@ import torch
 import torch.distributed as dist
 from torch.utils.data import IterableDataset
 
-import wenet.dataset.deprecated.processor as processor
+import wenet.dataset.process.processor as processor
 from wenet.text.base_tokenizer import BaseTokenizer
 from wenet.utils.file_utils import read_lists
 
@@ -50,12 +50,13 @@ class Processor(IterableDataset):
 
 class DistributedSampler:
 
-    def __init__(self, shuffle=True, partition=True, split_num=1):
+    def __init__(self, shuffle=True, partition=True, split_num=1,multi_num=1):
         self.epoch = -1
         self.update()
         self.shuffle = shuffle
         self.partition = partition
         self.split_num = split_num
+        self.multi_num = multi_num
 
     def update(self):
         assert dist.is_available()
@@ -105,10 +106,14 @@ class DistributedSampler:
             Returns:
                 List: data list after sample
         """
-        if self.split_num == 1:
+        if self.split_num == 1 and self.multi_num == 1:
             data = list(range(len(data)))
-        else:
+        elif self.split_num != 1:
+            assert self.multi_num == 1
             data = self.split_data(len(data))
+        else: 
+            assert self.split_num ==1
+            data = list(range(len(data*self.multi_num)))
         # TODO(Binbin Zhang): fix this
         # We can not handle uneven data for CV on DDP, so we don't
         # sample data by rank, that means every GPU gets the same
@@ -162,6 +167,8 @@ def Dataset(data_type,
     lists = read_lists(data_list_file)
     shuffle = conf.get('shuffle', True)
     split_num = conf.get('split_num', 1)
+    multi_num = conf.get('multi_num',1)
+    lists = lists * multi_num
     dataset = DataList(lists, shuffle=shuffle, partition=partition, split_num=split_num)
     if data_type == 'shard':
         dataset = Processor(dataset, processor.url_opener)
@@ -180,7 +187,7 @@ def Dataset(data_type,
         tokenizer.eod_id = conf['eod_id']
     # prompt dict
     from gxl_ai_utils.utils import utils_file
-    global_prompt_dict = utils_file.load_dict_from_yaml('conf/prompt_stage4.yaml')
+    global_prompt_dict = utils_file.load_dict_from_yaml(conf.get('prompt_conf_path',"conf/prompt_config.yaml"))
     dataset = Processor(dataset, processor.tokenize, tokenizer,  
                         global_prompt_dict=global_prompt_dict)
     filter_conf = conf.get('filter_conf', {})
@@ -218,7 +225,8 @@ def Dataset(data_type,
     if spec_trim:
         spec_trim_conf = conf.get('spec_trim_conf', {})
         dataset = Processor(dataset, processor.spec_trim, **spec_trim_conf)
-
+    # for emotion-only task
+    # dataset = Processor(dataset, processor.add_ssl_vec)
     if shuffle:
         shuffle_conf = conf.get('shuffle_conf', {})
         dataset = Processor(dataset, processor.shuffle, **shuffle_conf)

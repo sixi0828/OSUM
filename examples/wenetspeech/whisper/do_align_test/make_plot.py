@@ -33,7 +33,7 @@ def get_info(sentence):
 
     return result_dict
 
-input_text_path = "/home/node54_tmpdata/xlgeng/code/wenet_undersdand_and_speech_xlgeng/examples/wenetspeech/whisper/output/run_res/rank0.list"
+input_text_path = "/mnt/sfs/asr/code/wenet_undersdand_and_speech_xlgeng/examples/wenetspeech/whisper/output/run_res/rank0.list"
 res_list = []
 for line in open(input_text_path, "r", encoding="utf-8"):
     res_list.append(get_info(line))

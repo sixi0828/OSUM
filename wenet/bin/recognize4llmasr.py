@@ -300,7 +300,7 @@ def main():
 
     # Get prompt config
     from gxl_ai_utils.utils import utils_file
-    global_prompt_dict = utils_file.load_dict_from_yaml('conf/prompt_stage4.yaml')
+    global_prompt_dict = utils_file.load_dict_from_yaml(test_conf.get('prompt_config_path', 'conf/prompt_config.yaml'))
 
     with torch.cuda.amp.autocast(enabled=True,
                                  dtype=dtype,

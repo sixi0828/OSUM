@@ -27,7 +27,8 @@ from wenet.utils.train_utils import (wenet_join, batch_forward, batch_backward,
                                      update_parameter_and_lr, log_per_step,
                                      save_model)
 
-
+import os
+from gxl_ai_utils.utils import utils_file
 class Executor:
 
     def __init__(self,
@@ -45,6 +46,9 @@ class Executor:
         if self.train_step_timer is None:
             self.train_step_timer = StepTimer(self.step)
         model.train()
+        init_infos = configs.get("init_infos", {})
+        init_batch_num = init_infos.get("batch_idx", 0)
+        configs.pop("init_infos", None)
         info_dict = copy.deepcopy(configs)
         logging.info('using accumulate grad, new batch size is {} times'
                      ' larger than before'.format(info_dict['accum_grad']))
@@ -55,14 +59,28 @@ class Executor:
             model_context = model.join
         else:
             model_context = nullcontext
-
+        continue_data = info_dict['dataset_conf'].get('continue_data', True)
+        utils_file.logging_info(f'gengxuelong -------- continue_data: {continue_data}')
         with model_context():
+            logging.info(f'init_batch_num: {init_batch_num}')
             for batch_idx, batch_dict in enumerate(train_data_loader):
+                if continue_data and batch_idx < init_batch_num:
+                    if batch_idx %100 == 0:
+                        logging.info(f'gengxuelong skipping: batch_idx {batch_idx}')
+                    continue
+                if batch_idx %100 == 0:
+                        logging.info(f'gengxuelong using: batch_idx {batch_idx}')
+                    
                 info_dict["tag"] = "TRAIN"
                 info_dict["step"] = self.step
                 info_dict["batch_idx"] = batch_idx
-                if wenet_join(group_join, info_dict):
-                    break    # fix by zhaoyi ,促进多机训练
+                # if wenet_join(group_join, info_dict):
+                #     break
+                # rank = int(os.environ.get('RANK', 0))
+                # if batch_idx < 2400+3472+200    : # 2400+3572的位置会卡着，试着直接跳过他试试.双机器（调过顺序） 2400+3472+2840会卡着。三机器调过顺序后再 2400+3472+268会卡着
+                #     if (rank == 0):
+                #         print(f'batch_idx: {batch_idx}')
+                #     continue
 
                 if batch_dict["target_lengths"].size(0) == 0:
                     continue
@@ -83,36 +101,45 @@ class Executor:
                 with context():
                     info_dict = batch_forward(model, batch_dict, scaler,
                                               info_dict, self.device)
+                    if batch_idx %100 == 0:
+                        logging.info(f'after batch_forward: batch_idx {info_dict["batch_idx"]}')
+                    
                     info_dict = batch_backward(model, scaler, info_dict)
+                    if batch_idx %100 == 0:
+                        logging.info(f'after batch_backward: batch_idx {info_dict["batch_idx"]}')
+                    
 
                 info_dict = update_parameter_and_lr(model, optimizer,
                                                     scheduler, scaler,
                                                     info_dict)
+                if batch_idx %100 == 0:
+                    logging.info(f'after update_parameter_and_lr: batch_idx {info_dict["batch_idx"]}')
+                    
                 # write training: tensorboard && log
                 log_per_step(writer, info_dict, timer=self.train_step_timer)
-                # save_interval = info_dict.get('save_interval', sys.maxsize)
-                # if (self.step +
-                #         1) % save_interval == 0 and self.step != 0 and (
-                #             batch_idx + 1) % info_dict["accum_grad"] == 0:
-                #     import torch.distributed as dist
-                #     # Ensure all ranks start CV at the same time in step mode
-                #     dist.barrier()
-                #     # loss_dict = self.cv(model, cv_data_loader, configs)
-                #     model.train()
-                #     info_dict.update({
-                #         "tag":
-                #         "step_{}".format(self.step),
-                #         "loss_dict": {'loss':999,'acc':999},
-                #         "save_time":
-                #         datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S'),
-                #         "lrs":
-                #         [group['lr'] for group in optimizer.param_groups]
-                #     })
-                #     save_model(model, info_dict)
-                #     # write final cv: tensorboard
-                #     log_per_step(writer, info_dict)
-                #     # Ensure all ranks start Train at the same time in step mode
-                #     dist.barrier()
+                save_interval = info_dict.get('save_interval', sys.maxsize)
+                if (self.step +
+                        1) % save_interval == 0 and self.step != 0 and (
+                            batch_idx + 1) % info_dict["accum_grad"] == 0:
+                    import torch.distributed as dist
+                    # Ensure all ranks start CV at the same time in step mode
+                    dist.barrier()
+                    # loss_dict = self.cv(model, cv_data_loader, configs)
+                    model.train()
+                    info_dict.update({
+                        "tag":
+                        "step_{}".format(self.step),
+                        "loss_dict": {'loss':999,'acc':999},
+                        "save_time":
+                        datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S'),
+                        "lrs":
+                        [group['lr'] for group in optimizer.param_groups]
+                    })
+                    save_model(model, info_dict)
+                    # write final cv: tensorboard
+                    log_per_step(writer, info_dict)
+                    # Ensure all ranks start Train at the same time in step mode
+                    dist.barrier()
                 self.step += 1 if (batch_idx +
                                    1) % info_dict["accum_grad"] == 0 else 0
 

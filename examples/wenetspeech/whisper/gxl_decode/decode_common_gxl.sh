@@ -12,7 +12,7 @@ task=no_set_task # transcribe  sot_task  emotion_task
 lang=  # en zh
 
 english_sets='ami librispeech_clean librispeech_other'
-train_config=conf/finetune_whisper_medium.yaml
+train_config=conf/config_llm_huawei_base-version.yaml
 average_checkpoint=false
 average_num=5
 average_mode=step
@@ -23,7 +23,7 @@ reverse_weight=0.0
 blank_penalty=0.0
 length_penalty=0.0
 batch_size=12
-prompt_file=conf/prompt_stage2.yaml
+prompt_file=conf/prompt_config.yaml
 
 . tools/parse_options.sh || exit 1;
 # 将所有传进来的元素打印出来
@@ -77,7 +77,7 @@ function get_task_description {
             echo "<TRANSCRIBE><CAPTION>"
             ;;
         "chat")
-            echo "<S2TCHAT>"
+            echo "<TRANSCRIBE><S2TCHAT>"
             ;;
         "emotion")
             echo "<TRANSCRIBE><EMOTION>"
@@ -107,7 +107,7 @@ function get_task_description {
             echo "<TRANSCRIBE><ALIGN>"
             ;;
         "public_test/AirBench_speech")
-            echo "<S2TCHAT>"
+            echo "<TRANSCRIBE><S2TCHAT>"
             ;;
         "caption_0107_esc50")
             echo "<TRANSCRIBE><CAPTION>"
@@ -121,16 +121,37 @@ function get_task_description {
         "3500_chat")
             echo "<SPEECH2TEXT_SPEECH_TOKEN>"
             ;;
-        "3500_asr")
+        "3500_asr") 
             echo "<TEXT2SPEECH_TOKEN>"
             ;;
-        "b6")
+        "aslp_chat_test")
+            echo "<TRANSCRIBE><S2TCHAT>"
+            ;;
+        "aslp_chat_test_for_asr")
+            echo "<TRANSCRIBE>"
+            ;;
+        "aligin_english_clean")
+            echo "<TRANSCRIBE><ALIGN>"
+            ;;
+        "align_cn_noize")
+            echo "<TRANSCRIBE><ALIGN>"
+            ;;
+        "align_en_noize")
+            echo "<TRANSCRIBE><ALIGN>"
+            ;;
+        "b9")
             echo "<TRANSCRIBE><AGE>"
             ;;
-        "b7")
+        "b9")
             echo "<TRANSCRIBE><AGE>"
             ;;
-        "b8")
+        "b9")
+            echo "<TRANSCRIBE><AGE>"
+            ;;
+        "b9")
+            echo "<TRANSCRIBE><AGE>"
+            ;;
+        "b9")
             echo "<TRANSCRIBE><AGE>"
             ;;
         "b9")
@@ -187,6 +208,7 @@ for testset in ${test_sets}; do
   result_dir=$dir/test_${base}/$testset
   echo "result_dir is $result_dir"
   mkdir -p $result_dir
+  echo "哈哈哈哈我是耿雪龙"
   python wenet/bin/recognize4llmasr.py --gpu ${gpu_id} \
     --modes $decode_modes \
     --config $dir/train.yaml \
@@ -203,6 +225,8 @@ for testset in ${test_sets}; do
     --task $task \
     --lang $lang \
     ${decoding_chunk_size:+--decoding_chunk_size $decoding_chunk_size}
+
+  echo "哈哈啊啊啊啊"  
 
   mkdir -p ${result_dir}
   for mode in ${decode_modes}; do

@@ -44,23 +44,20 @@ from gxl_ai_utils.utils import utils_file
 
 try:
     import torch_npu
-
     torch_npu.npu.conv.allow_hf32 = False
     # import deepspeed_npu
     from torch_npu.npu import amp
     from torch_npu.contrib import transfer_to_npu
 except ImportError:
-    utils_file.logging_warning(
-        "torch_npu is not installed, please install torch_npu first if you want to use torch_npu")
+    utils_file.logging_warning("torch_npu is not installed, please install torch_npu first if you want to use torch_npu")
 torch.backends.cudnn.allow_tf32 = False
 torch.backends.cuda.matmul.allow_tf32 = False
 
 from msprobe.pytorch import seed_all
 import gc
+# from patches import modelling_qwen2_patch
 
-gc.set_threshold(700, 10, 10000)  # python gc阈值设置
-
-
+gc.set_threshold(700, 10, 10000) # python gc阈值设置
 # import deepspeed_npu
 def get_args():
     parser = argparse.ArgumentParser(description='training your network')
@@ -111,6 +108,7 @@ def main():
     seed_all(777)
     utils_file.logging_info('结束严格seed')
     logging.info('Random seed set to {}'.format(777))
+    
 
     # Read config
     with open(args.config, 'r') as fin:
@@ -135,6 +133,8 @@ def main():
     configs = check_modify_and_save_config(args, configs,
                                            tokenizer.symbol_table)
 
+    
+
     if hasattr(args, 'lora_reinit') and args.lora_reinit:
         reinit_lora(model, args, configs, tokenizer)
 
@@ -153,7 +153,7 @@ def main():
 
     # Load deepspeed checkpoint
     if args.load_dir is not None and \
-            args.ckpt_id is not None:
+        args.ckpt_id is not None:
         _, client_sd = model.load_checkpoint(args.load_dir, args.ckpt_id)
 
     # Save checkpoints
@@ -179,7 +179,7 @@ def main():
     # if save_interval in configs, steps mode else epoch mode
     end_epoch = configs.get('max_epoch', 100)
     assert start_epoch <= end_epoch
-    configs.pop("init_infos", None)
+    # configs.pop("init_infos", None)
     final_epoch = None
     for epoch in range(start_epoch, end_epoch):
         configs['epoch'] = epoch
@@ -190,14 +190,15 @@ def main():
 
         dist.barrier(
         )  # NOTE(xcsong): Ensure all ranks start Train at the same time.
-        # NOTE(xcsong): Why we need a new group?  see `train_utils.py::wenet_join`
-        group_join = dist.new_group(  # fix by zhaoyi for 多机训练
-            backend="gloo", timeout=datetime.timedelta(seconds=args.timeout))
-        # group_join = None
+        # NOTE(xcsong): Why we need a new group? see `train_utils.py::wenet_join`
+        # group_join = dist.new_group(
+        #     backend="gloo", timeout=datetime.timedelta(seconds=args.timeout))
+        group_join = None
         executor.train(model, optimizer, scheduler, train_data_loader,
                        cv_data_loader, writer, configs, scaler, group_join)
         # dist.destroy_process_group(group_join)
-
+        rank = int(os.environ.get('RANK', 0))
+        logging.info(f"rank: {rank} ,训练整个epoch完毕")
         dist.barrier(
         )  # NOTE(xcsong): Ensure all ranks start CV at the same time.
         loss_dict = executor.cv(model, cv_data_loader, configs)
