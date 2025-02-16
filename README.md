@@ -48,7 +48,7 @@ performance than Qwen2-Audio despite using significantly fewer computational res
 Evaluation results of ASR tasks on public and internal test sets. The bold font represents the best
 result among the same test set. All internal results are inferred by ourselves.
 <p align="center">
-    <img src="images/res_asr.png" width="80%"/>
+    <img src="images/res_asr.jpg" width="80%"/>
 <p>
 
 
@@ -56,7 +56,7 @@ Evaluation results of multi-tasking on public and internal test sets. The best r
 are highlighted in bold font. Results shown in blue font, as well as those on internal test sets, are inferred
 using the original released model by ourselves.
 <p align="center">
-    <img src="images/res_multi.png" width="80%"/>
+    <img src="images/res_multi.jpg" width="80%"/>
 <p>
 
 <!--  We have provided **all** evaluation scripts to reproduce our results. Please refer to [eval_audio/EVALUATION.md](eval_audio/EVALUATION.md) for details.
