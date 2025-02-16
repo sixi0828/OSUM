@@ -33,14 +33,12 @@ The overview of the architecture and tasks of OSUM.
 <p>
 
 ## News and Updates
-### 2025.1.22 🔥 We released the  [OSUM technical report v1.0](https://arxiv.org/abs/2501.13306).
 
-### 2025.2.16 🎉 We released the [OSUM technical report v2.0](https://arxiv.org/abs/2501.13306v2), [checkpoint](https://huggingface.co/ASLP-lab/OSUM), and [test page](https://huggingface.co/spaces/ASLP-lab/OSUM). 
-In technical report v2.0, compared to v1.0, additional data and training steps have been introduced, specifically adding two types of data:
+### 2025.2.16 🎉 We updated the technical report [OSUM technical report v2.0](https://arxiv.org/abs/2501.13306v2) and released the [checkpoint](https://huggingface.co/ASLP-lab/OSUM), and the online [test page](https://huggingface.co/spaces/ASLP-lab/OSUM) on hugging face.
+In technical report v2.0, the OSUM model has gone through more training steps and the training data volume has increased to 50.5K hours (as compared to 44.1K hours in v1.0) 
 - 3000 hours of speech gender classification (SGC) data, which includes 1500 hours of existing data augmented with noise, and another 1500 hours of new data.
-- Age prediction (SAP) data expansion: The original 3400 hours of age prediction data were augmented with noise, doubling the volume to 6800 hours.
-
-
+- Speaker age prediction (SAP) data expansion: The original 3400 hours of age prediction data were augmented with noise, doubling the volume to 6800 hours.
+### 2025.1.22 🔥 We released the [OSUM technical report v1.0](https://arxiv.org/abs/2501.13306).
 
 <br>
 
