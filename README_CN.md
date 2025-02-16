@@ -29,12 +29,13 @@ OSUM模型将Whisper编码器与Qwen2 LLM相结合，支持广泛的语音任务
 <p>
 
 ## News and Updates
-### 2025.1.22 🔥 我们发布了 [OSUM technical report v1.0](https://arxiv.org/abs/2501.13306)。
 
-### 2025.2.16 🎉 我们发布了 [OSUM technical report v2.0](https://arxiv.org/abs/2501.13306v2)，[checkpoint](https://huggingface.co/ASLP-lab/OSUM)，以及 [test page](https://huggingface.co/spaces/ASLP-lab/OSUM)。
-在技术报告v2.0中，相比于v1.0，增加了数据和训练步骤，具体包括添加了以下两种数据：
-- 3000小时的语音性别分类（SGC）数据，其中包括1500小时的现有数据（加噪声），以及另外1500小时的新数据。
-- 年龄预测（SAP）数据扩展：原始的3400小时年龄预测数据经过噪声增强，数据量增加到6800小时。
+
+### 2025.2.16 🎉我们更新了技术报告 [OSUM technical report v2.0](https://arxiv.org/abs/2501.13306v2)，并发布了[checkpoint](https://huggingface.co/ASLP-lab/OSUM)，以及 Hugging Face 上的在线 [test page](https://huggingface.co/spaces/ASLP-lab/OSUM)。
+在技术报告 v2.0 中，OSUM 模型经过了更多的训练步骤，训练数据量增加到了 50.5K 小时（相比 v1.0 的 44.1K 小时）：
+- 3000 小时的语音性别分类（SGC）数据，其中包括 1500 小时的现有数据，通过噪声增强，另有 1500 小时的新数据。
+- 说话人年龄预测（SAP）数据扩展：原有的 3400 小时年龄预测数据经过噪声增强，数据量增加到 6800 小时。
+### 2025.1.22 🔥 我们发布了 [OSUM technical report v1.0](https://arxiv.org/abs/2501.13306)。
 
 
 
