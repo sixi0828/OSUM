@@ -45,12 +45,12 @@ OSUM 模型和Qwen2-Audio 相比，在大多数任务中，尽管 OSUM 使用的
 
 
 <p align="center">
-    <img src="images/res_asr.png" width="90%"/>
+    <img src="images/res_asr.jpg" width="90%"/>
 <p>
 
 在公共和内部测试集上的多任务评估结果如下表所示。每个测试集的最佳结果以加粗字体突出显示，蓝色字体显示的结果以及内部测试集上的结果，均为我们使用官方发布的模型自行推理得出。
 <p align="center">
-    <img src="images/res_multi.png" width="90%"/>
+    <img src="images/res_multi.jpg" width="90%"/>
 <p>
 
 
