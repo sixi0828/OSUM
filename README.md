@@ -16,7 +16,7 @@ Xuelong Geng, Kun Wei, Qijie Shao, Shuiyun Liu*, Zhennan Lin*, Zhixian Zhao*, Gu
 
 
 <p align="center">
-OSUM <a href=""> comming soon</a> </a>&nbsp
+ <a href=""> Test Page</a> </a>&nbsp
 <br>
 📑 <a href="https://www.arxiv.org/pdf/2501.13306">Paper</a> &nbsp&nbsp | &nbsp&nbsp 📑 <a href="https://aslp-lab.github.io/OSUM.github.io/">Demo</a> &nbsp&nbsp | &nbsp&nbsp 💬 <a href="images/wechat.png">WeChat (微信)</a>&nbsp&nbsp 
 </p>
