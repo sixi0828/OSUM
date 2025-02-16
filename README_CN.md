@@ -1,6 +1,4 @@
-![image](https://github.com/user-attachments/assets/9eb5a214-362d-4a11-87d2-c0c62377b191)<p align="left">
-        <a >中文</a> &nbsp｜ &nbsp <a href="README.md">English</a>&nbsp&nbsp
-</p>
+
 <p align="center">
    <h1>OSUM: Advancing Open Speech Understanding Models with Limited Resources in Academia</h1>
 </p>
