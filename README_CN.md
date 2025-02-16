@@ -1,4 +1,4 @@
-<p align="left">
+![image](https://github.com/user-attachments/assets/9eb5a214-362d-4a11-87d2-c0c62377b191)<p align="left">
         <a >中文</a> &nbsp｜ &nbsp <a href="README.md">English</a>&nbsp&nbsp
 </p>
 <p align="center">
@@ -13,10 +13,11 @@ Xuelong Geng, Kun Wei, Qijie Shao, Shuiyun Liu*, Zhennan Lin*, Zhixian Zhao*, Gu
 <p>
 
 <p align="center">
-OSUM <a href=""> 敬请期待</a> </a>&nbsp
+ <a href="https://huggingface.co/spaces/ASLP-lab/OSUM"> Test Page</a> </a>&nbsp
 <br>
-📑 <a href="https://www.arxiv.org/pdf/2501.13306">Paper</a> &nbsp&nbsp | &nbsp&nbsp 📑 <a href="https://aslp-lab.github.io/OSUM.github.io/">Demo</a> &nbsp&nbsp | &nbsp&nbsp 💬 <a href="">WeChat (微信)</a>&nbsp&nbsp 
+📑 <a href="https://www.arxiv.org/pdf/2501.13306">Paper</a> &nbsp&nbsp | &nbsp&nbsp 📑 <a href="https://aslp-lab.github.io/OSUM.github.io/">Demo</a> &nbsp&nbsp | &nbsp&nbsp 💬 <a href="images/wechat.png">WeChat (微信)</a>&nbsp&nbsp 
 </p>
+
 
 
 大型语言模型（LLMs）在各种下游任务中取得了显著进展，启发了业界对语音理解语言模型（speech understanding language models, SULMs）的开发，以期实现基于语音情感、性别等副语言的高表现力交互。然而，大多数先进的SULMs是由行业头部公司开发的，这消耗了大规模的数据和计算资源，而这些在学术界并不容易获得。此外，虽然训练好的模型和推理代码被开源了，但训练框架和数据处理流程依然缺乏透明度，这也为进一步研究产生了障碍。在本研究中，我们提出了OSUM，一个开放的语音理解模型，旨在探索在有限的学术资源下训练SLUMs的潜力。OSUM模型将Whisper编码器与Qwen2 LLM相结合，支持广泛的语音任务，包括语音识别（ASR）、带时间戳的语音识别（SRWT）、语音事件检测（VED）、语音情感识别（SER）、说话风格识别（SSR）、说话者性别分类（SGC）、说话者年龄预测（SAP）和语音转文本聊天（STTC）。通过采用ASR+X训练策略，OSUM通过同时优化模态对齐和目标任务，实现了高效稳定的多任务训练。除了提供强大的性能，OSUM还强调透明度，我们提供公开可用的代码，并详细介绍了数据处理流程，以期为学术界提供有价值的参考。通过这样做，我们旨在加速先进SULM技术的研究和创新。
@@ -38,7 +39,7 @@ OSUM模型将Whisper编码器与Qwen2 LLM相结合，支持广泛的语音任务
 ## Evaluation
 OSUM 模型和Qwen2-Audio 相比，在大多数任务中，尽管 OSUM 使用的计算资源和训练数据明显更少，但它的大部分表现接近甚至优于Qwen2-Audio。
 <p align="center">
-    <img src="images/radar.png" width="80%"/>
+    <img src="images/radar.jpg" width="80%"/>
 <p>
 
 在公共和内部测试集上的语音识别（ASR）任务评估结果如下表所示。加粗字体表示同一测试集中的最佳结果。
