@@ -33,10 +33,15 @@ The overview of the architecture and tasks of OSUM.
 <p>
 
 ## News and Updates
-* 2025.1.22 🔥 We released the OSUM technical report v1.0.
-* 2025.2.16 🎉 We released the OSUM technical report v2.0, checkpoint, and test page.  In technical report v2.0, compared to v1.0, additional data and training steps have been introduced, specifically adding two types of data:
-3000 hours of speech gender classification (SGC) data, which includes 1500 hours of existing data augmented with noise, and another 1500 hours of new data.
-Age prediction (SAP) data expansion: The original 3400 hours of age prediction data were augmented with noise, doubling the volume to 6800 hours.
+### 2025.1.22 🔥 We released the OSUM technical report v1.0.
+
+### 2025.2.16 🎉 We released the OSUM technical report v2.0, checkpoint, and test page. 
+In technical report v2.0, compared to v1.0, additional data and training steps have been introduced, specifically adding two types of data:
+- **3000 hours of speech gender classification (SGC) data**, which includes:
+  - 1500 hours of existing data augmented with noise
+  - Another 1500 hours of new data
+- **Age prediction (SAP) data expansion**:
+  - The original 3400 hours of age prediction data were augmented with noise, doubling the volume to 6800 hours.
 
 
 
