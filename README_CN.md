@@ -74,9 +74,16 @@ pip install requirements_little.txt
 <!--## Quickstart
 ## Demo
 ### Web UI
-
-## Citation
 -->
+## Citation
+```
+@article{geng2025osum,
+  title={{OSUM}: {Advancing} Open Speech Understanding Models with Limited Resources in Academia},
+  author={Geng, Xuelong and Wei, Kun and Shao, Qijie and Liu, Shuiyun and Lin, Zhennan and Zhao, Zhixian and Li, Guojian and Tian, Wenjie and Chen, Peikun and Li, Yangze and others},
+  journal={arXiv preprint arXiv:2501.13306},
+  year={2025}
+}
+```
 ## Contact Us
 
 如果您有兴趣向我们的研究团队或产品团队留言，欢迎发送电子邮件至 `xlgeng@mail.nwpu.edu.cn`。
