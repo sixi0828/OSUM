@@ -77,7 +77,7 @@ pip install requirements.txt
 ### Web UI
 -->
  <p align="left">
-       How to use the OSUM framework for inference and training? Please refer to <a href="exmpales/osum/README.md">here</a>
+       How to use the OSUM framework for inference and training? Please refer to <a href="examples/osum/README.md">here</a>
 </p>
 
 ## License Agreement
