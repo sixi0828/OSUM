@@ -79,7 +79,7 @@ pip install requirements_little.txt
 
 ## License Agreement
 
-We use the Apache 2.0 license. Researchers and developers are free to use the codes and model weights of our OSUM, even for commercial use. Check the license at LICENSE for more details.
+We use the Apache 2.0 license. Researchers and developers are free to use the codes and model weights of our OSUM, even for commercial use. Check the license at [LICENSE.txt](LICENSE.txt) for more details.
 <br>
 
 ## Citation
