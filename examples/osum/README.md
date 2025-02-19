@@ -1,5 +1,5 @@
  <p align="left">
-        <a href="readme_cn.md">中文</a> &nbsp｜ &nbsp English&nbsp&nbsp
+        <a href="README_CN.md">中文</a> &nbsp｜ &nbsp English&nbsp&nbsp
 </p>
 
 # How to Use the OSUM Model Framework for Training and Inference
