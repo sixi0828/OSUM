@@ -75,6 +75,11 @@ pip install requirements_little.txt
 ## Demo
 ### Web UI
 -->
+
+## License Agreement
+
+我们使用的是 Apache 2.0 许可证。研究人员和开发人员可以自由使用我们的 OSUM 的代码和模型权重，甚至可用于商业用途。更多详细信息，请查看许可证文件[LICENSE.txt](LICENSE.txt)中的相关内容。
+<br>
 ## Citation
 ```
 @article{geng2025osum,
