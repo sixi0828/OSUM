@@ -1,6 +1,0 @@
-{
-"npu_path": "/mnt/sfs/asr/code/wenet_undersdand_and_speech_xlgeng/examples/wenetspeech/whisper/dump/npu/step0/rank0/dump.json",
-"bench_path": "/mnt/sfs/asr/code/wenet_undersdand_and_speech_xlgeng/examples/wenetspeech/whisper/dump/gpu/step0/rank0/dump.json",
-"stack_path": "/mnt/sfs/asr/code/wenet_undersdand_and_speech_xlgeng/examples/wenetspeech/whisper/dump/npu/step0/rank0/stack.json",
-"is_print_compare_log": true
-}

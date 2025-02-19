@@ -69,13 +69,16 @@ using the original released model by ourselves.
 
 ## Requirements
 ```
-pip install requirements_little.txt
+pip install requirements.txt
 ```
 <!-- 
 ## Quickstart
 ## Demo
 ### Web UI
 -->
+ <p align="left">
+       How to use the OSUM framework for inference and training? Please refer to <a href="exmpales/osum/README.md">here</a>
+</p>
 
 ## License Agreement
 

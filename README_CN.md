@@ -68,8 +68,11 @@ OSUM 模型和Qwen2-Audio 相比，在大多数任务中，尽管 OSUM 使用的
 
 ## Requirements
 ```
-pip install requirements_little.txt
+pip install requirements.txt
 ```
+<p align="left">
+       如何使用OSUM框架进行推理和训练？请参考 <a href="exmpales/osum/README.md">这里</a>
+</p>
 
 <!--## Quickstart
 ## Demo
