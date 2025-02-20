@@ -35,8 +35,6 @@ gpu_id = 0
 model = model.cuda(gpu_id)
 tokenizer = init_tokenizer(configs)
 print(model)
-input_wav_path = "./audio.wav"
-input_prompt = "将这段音频的语音内容详细记录为文字稿。"
 resample_rate = 16000
 
 def do_resample(input_wav_path, output_wav_path):
@@ -96,6 +94,8 @@ def do_decode(input_wav_path, input_prompt):
 
 
 if __name__ == "__main__":
+    input_wav_path = "***"
+    input_prompt = "将这段音频的语音内容详细记录为文字稿。" # for asr, more prompt refer to ../conf/prompt_config.yaml
     res_text_list = do_decode(input_wav_path, input_prompt)
     print(res_text_list)
 

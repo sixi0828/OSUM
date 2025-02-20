@@ -99,7 +99,18 @@ task="<TRANSCRIBE><GENDER>"
 bash decode/do_docode.sh --output_dir $output_dir --task $task --data_type $data_type --data_path $data_path --gpu_id $gpu_id --ckpt_path $ckpt_path --lang $lang --prompt_file $prompt_file
 ```
 
+### 如何更加直接的推理?
+- 对于单条音频的推理
+```shell
+# 把该文件中的 checkpoint_path 变量设置为本地一下载的ckpt, 然后再main函数中设置对应的音频路径和prompt
+python  OSUM/examples/osum/runtime/infer_runtime.py
+```
 
+- 部署并进行网页端推理
+```shell
+# 部署并启动服务，会再本地127.0.0.1:7860部署一个测试网页，同样需要先设置 checkpoint_path变量
+python  OSUM/examples/osum/runtime/web.py
+```
 
 ## 训练
 

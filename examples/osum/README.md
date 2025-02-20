@@ -101,6 +101,20 @@ task="<TRANSCRIBE><GENDER>"
 bash decode/do_docode.sh --output_dir $output_dir --task $task --data_type $data_type --data_path $data_path --gpu_id $gpu_id --ckpt_path $ckpt_path --lang $lang --prompt_file $prompt_file
 ```
 
+
+### How to Perform Inference More Directly?
+- For inference on a single audio file
+    ```shell
+    # Set the checkpoint_path variable in this file to the locally downloaded ckpt, and then set the corresponding audio path and prompt in the main function
+    python OSUM/examples/osum/runtime/infer_runtime.py
+    ```
+
+- Deploy and perform web-based inference
+    ```shell
+    # Deploy and start the service, which will deploy a test webpage on localhost 127.0.0.1:7860. You also need to set the checkpoint_path variable first.
+    python OSUM/examples/osum/runtime/web.py
+    ```
+
 ## Training
 
 Next, let's see how to perform training.
