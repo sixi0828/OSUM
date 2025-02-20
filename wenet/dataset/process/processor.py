@@ -342,33 +342,19 @@ def filter(data,
 
         if num_frames < min_length:
             continue
-
-        # if "output_type" in sample and sample["output_type"] == "speech2text_token":
-        #     max_length = int(max_length / 2)
-        # if "output_type" in sample and sample["output_type"] == "text2token":
-        #     max_length = int(max_length / 1.5)
         if num_frames > max_length:
             # continue
             if 'task' in sample and sample['task'] == '<CAPTION>':
-                # utils_file.logging_limit_print('进行了随机剪裁')
-                # 随机选择一个起始点进行裁剪
                 start_frame = random.randint(0, int(num_frames - max_length))
                 end_frame = start_frame + max_length
                 sample['wav'] = sample['wav'][:, int(start_frame / 100 * sample['sample_rate']): int(
                     end_frame / 100 * sample['sample_rate'])]
-                # print('sample[', sample['wav'].shape)
             else:
                 continue
         if len(sample['label']) < token_min_length:
             continue
         if len(sample['label']) > token_max_length:
             continue
-        # if num_frames != 0:
-        #     if len(sample['label']) / num_frames < min_output_input_ratio:
-        #         continue
-        #     if len(sample['label']) / num_frames > max_output_input_ratio:
-        #         continue
-
         if sample["output_type"] == "speech2text_token":
             seq_len = len(sample['prompt']) + num_frames / 8 + len(sample['label']) + len(sample['speech_token'])
         elif sample["output_type"] == "text2token":
@@ -582,40 +568,6 @@ global_style_dict = {
     "幽默": "其他",
     "其他": "其他",
 }
-# global_chat_dict = utils_file.load_dict_from_scp("/mnt/sfs/asr/update_data/3500_chat_asr/gxl_all_3500_with_asr_chat.scp")
-
-asr_X_set = set([
-    "<TRANSCRIBE> <EMOTION>",
-    "<TRANSCRIBE> <STYLE>",
-    "<TRANSCRIBE> <CAPTION>",
-    "<TRANSCRIBE> <GENDER>",
-    "<TRANSCRIBE> <AGE>",
-])
-chat_set = set([
-    "<TRANSCRIBE> <S2TCHAT>", 
-])
-import re 
-def extract_first_content(s):
-    # 使用正则表达式匹配尖括号中的内容, input: "dfsfs<喜喜>", output: "<喜喜>"
-    match = re.search(r'<[^>]+>', s)
-    if match:
-        return match.group()
-    else:
-        return "None_in_extract_X"
-
-def extract_all_contents(s):
-    # 使用正则表达式匹配所有尖括号中的内容
-    matches = re.findall(r'<[^>]+>', s)
-    return matches
-
-def extract_answer(s):
-    res_items = s.strip().split("<开始回答>")
-    if len(res_items) == 2:
-        res = res_items[1]
-    else:
-        res = "None_in_extract_answer"
-    return res 
-
 
 
 def replace_keys_in_brackets(input_str, key_value_dict):
@@ -644,42 +596,11 @@ def tokenize(data, tokenizer: BaseTokenizer, global_prompt_dict=None):
             exit()
         if 'task' in sample:
             task_name = sample['task']
-            # if "<AGE>" in task_name:
-            #     txt = sample['txt'].replace("<YOUTH>", "<ADULT>").replace("<MIDDLE_AGE>", "<ADULT>").replace("<MIDDLE>", "<ADULT>")
             if "<STYLE>" in sample['task']:
                 txt = replace_keys_in_brackets(sample['txt'], global_style_dict)
-            elif task_name in asr_X_set:
-                utils_file.logging_limit_print(f"task_name: {task_name}, in asr_X_set")
-                # 得到一个50%的随机
-                if random.random() < 0.5:
-                    sample['task'] = task_name.replace("<TRANSCRIBE> ", "")
-                    utils_file.logging_limit_print(f"task_name: {task_name},发生任务替换, replace to {sample['task']}")
-                    txt = extract_first_content(sample['txt'])
-                    utils_file.logging_limit_print(f"old txt: {sample['txt']}, 发生了文本替换, replace to new txt: {txt}")
-                else:
-                    sample['task'] = task_name
-                    txt = sample['txt']
-            elif task_name in chat_set:
-                utils_file.logging_limit_print(f"task_name: {task_name}, in chat_set")
-                # 得到一个50%的随机
-                if random.random() < 0.5:
-                    sample['task'] = task_name.replace("<TRANSCRIBE> ", "")
-                    utils_file.logging_limit_print(f"task_name: {task_name},发生任务替换, replace to {sample['task']}")
-                    txt = extract_answer(sample['txt'])
-                    utils_file.logging_limit_print(f"old txt: {sample['txt']}, 发生了文本替换, replace to new txt: {txt}")
-                else:
-                    sample['task'] = task_name
-                    txt = sample['txt']
-            # elif "<S2TCHAT>" in sample['task']:
-            #     # 得到一个100%的随机
-            #     if random.random() < 1:
-            #         if sample['key'].replace(".mp3", "") in global_chat_dict:
-            #             txt = global_chat_dict[sample['key'].replace(".mp3", "")]
-            #             sample['task'] = "<TRANSCRIBE> <S2TCHAT>"
-            #         else:
-            #             txt = sample['txt']
-            #     else:
-            #         txt = sample['txt']
+            else:
+                sample['task'] = task_name
+                txt = sample['txt']
             else:
                 txt = sample['txt']
         else:
@@ -726,20 +647,11 @@ def tokenize(data, tokenizer: BaseTokenizer, global_prompt_dict=None):
                 sample['prompt'] = tokenizer.tokenize(prompt)[1]  # labels
             except:
                 pass
-            # 报错修改 from sywang ,只有推理的时候才会需要（raw格式），tar格式会自动转int list
-            # try:
-            #     utils_file.logging_limit_print("type of sample['speech_token']: ", type(sample['speech_token']))
-            #     speech_tokens = ast.literal_eval(sample['speech_token'])  # 解析字符串为列表
-            # except (ValueError, SyntaxError) as e:
-            #     print(f"解析错误: {e}在{speech_tokens}")
-            #     speech_tokens = []
-            # speech_token = [int(x) for x in speech_tokens]
             speech_token = [int(x) for x in sample['speech_token']]
             sample['speech_token'] = [4096] + speech_token + [4096]
         else:
             sample['output_type'] = 'text'
             sample['speech_token'] = [4096]
-        # utils_file.logging_limit_print(f'prompt:{prompt}, label:{txt}')
         yield sample
 
 

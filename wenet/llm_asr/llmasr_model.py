@@ -16,10 +16,6 @@ from wenet.llm_asr.downsampler import get_downsampler, LyzConv1dSubsampling
 from wenet.utils.mask import make_pad_mask
 
 
-# import torch_npu
-# from torch_npu.contrib import transfer_to_npu
-
-# from msprobe.pytorch import seed_all,PrecisionDebugger
 
 class LLMASR_Model(nn.Module):
     def __init__(self,
@@ -66,7 +62,6 @@ class LLMASR_Model(nn.Module):
         if not self.low_resource:
             self.llama_model = AutoModelForCausalLM.from_pretrained(
                 llm_path,
-                # torch_dtype=torch.float32 if is_inference else torch.float16,
                 torch_dtype=torch.bfloat16,
                 trust_remote_code=True,
                 output_hidden_states=True,
@@ -96,7 +91,6 @@ class LLMASR_Model(nn.Module):
         self.lora = lora
         if lora:
             utils_file.logging_limit_print("耿雪龙： 使用lora了")
-            # target_modules = ['w_pack', 'o_proj', 'gate_proj', 'down_proj']
             target_modules = ['q_proj', 'k_proj', 'v_proj', 'o_proj', 'gate_proj', 'down_proj']
             if is_inference:
                 self.peft_config = LoraConfig(
@@ -156,7 +150,6 @@ class LLMASR_Model(nn.Module):
         self.train_speech_out = train_speech_out
         utils_file.logging_info(f'耿雪龙： 是否进行语音输出训练：{self.train_speech_out}')
         self.loss_fct = CrossEntropyLoss(reduction='mean')
-        # self.debugger = PrecisionDebugger(config_path='./do_align_test/config_gpu.json', model=self.encoder)
 
     def get_label_embedding(self, labels, labels_lengths):
         """"""
@@ -278,7 +271,6 @@ class LLMASR_Model(nn.Module):
         inputs_embeds = torch.cat(inputs_embeds_list, dim=1)
         attention_mask = torch.cat(attention_mask_list, dim=1)
         target = torch.cat(target_list, dim=1)
-        # utils_file.logging_limit_print(f'耿雪龙 output_type: {output_type}')
         position_ids = attention_mask.long().cumsum(-1) - 1
         position_ids.masked_fill_(attention_mask == 0, 1)
         if output_type == 'text':
@@ -335,7 +327,6 @@ class LLMASR_Model(nn.Module):
 
         if self.embed_tokens.weight.dtype == torch.float16 or self.embed_tokens.weight.dtype == torch.bfloat16:
             utils_file.logging_limit_print('generate(): self.embed_tokens.weight.dtype == torch.float16')
-            # embeds = embeds.to(torch.float16)
             embeds = embeds.to(torch.bfloat16)
             atts = atts.to(torch.bfloat16)
         outputs = self.llama_model.generate(
@@ -404,49 +395,13 @@ class LLMASR_Model(nn.Module):
         wav_embedding: (b, l, v)
         wav_mask:  (b, l), wav为有效值的位置为true
         """
-        # utils_file.logging_limit_print('get_embedding_from_wav(): wavs.shape:', wavs.shape)
-        # utils_file.logging_limit_print('get_embedding_from_wav(): wavs_len.shape:', wavs_len.shape)
         rank = int(os.environ.get('RANK', 0))
-        # self.debugger.start()
         encoder_out, encoder_mask = self.encoder(wavs, wavs_len)
-        # self.debugger.stop()
-        # self.debugger.step()
-        # if rank == 0:
-        #     utils_file.logging_limit_print(
-        #         f'encoder out shape: {encoder_out.shape},encoder的第一帧的前20个数字：\n{encoder_out[0][0][:20]}')
-
-        # utils_file.logging_limit_print(
-        #     'get_embedding_from_wav(): speech_embeds.shape,by  self.encoder(wavs, wavs_len):',
-        #     encoder_out.shape)
-
         speech_embeds, encoder_mask = self.down_sample_2(encoder_out, encoder_mask)
-        # if rank == 0:
-        #     utils_file.logging_limit_print(
-        #         f'out of down_sample_2 shape: {speech_embeds.shape},encoder的第一帧的前20个数字：\n{speech_embeds[0][0][:20]}')
-
-        # utils_file.logging_limit_print(
-        #     'get_embedding_from_wav(): speech_embeds.shape,by  self.down_sample_2(speech_embeds):', speech_embeds.shape)
-        # # max_utt_len = speech_embeds.size(1)
-        # filled_wavs_len = torch.ones(speech_embeds.size(0)) * max_utt_len
-        # filled_wavs_len = filled_wavs_len.to(speech_embeds.device)
         if self.speech_transformer is not None:
             filled_wavs_len = encoder_mask.squeeze(1).sum(-1)
             speech_embeds, encoder_mask = self.speech_transformer(speech_embeds, filled_wavs_len)
-            # if rank == 0:
-            #     utils_file.logging_limit_print(
-            #         f'out of link shape: {speech_embeds.shape},encoder的第一帧的前20个数字：\n {speech_embeds[0][0][:20]}')
-
-            # utils_file.logging_limit_print(
-            #     'get_embedding_from_wav(): speech_embeds.shape,by  self.speech_transformer(speech_embeds, speech_lens):',
-            #     speech_embeds.shape)
             speech_embeds = self.speech_llama_proj(speech_embeds)
-            # if rank == 0:
-            #     utils_file.logging_limit_print(
-            #         f'out of speech_llama_proj shape: {speech_embeds.shape},encoder的第一帧的前20个数字：\n {speech_embeds[0][0][:20]}')
-
-        # utils_file.logging_limit_print(
-        #     'get_embedding_from_wav(): speech_embeds.shape,by  self.speech_llama_proj(speech_embeds):',
-        #     speech_embeds.shape)
 
         return speech_embeds, encoder_mask.squeeze(1)
 
@@ -462,16 +417,13 @@ class LLMASR_Model(nn.Module):
 
     def get_embeds_from_wav_path(self, wav_path):
         wav_i2_path = wav_path
-        # utils_file.logging_limit_print('get_embeds_from_wav_path(): wav_i2_path:', wav_i2_path)
         waveform_i2, _ = torchaudio.load(wav_i2_path)
-        # utils_file.logging_limit_print('get_embeds_from_wav_path(): waveform_i2.shape:', waveform_i2.shape)
         if len(waveform_i2.shape) != 1:
             waveform_i2 = waveform_i2[0]
         waveform_i2 = waveform_i2.to(self.embed_tokens.weight.device)
         wavs_len_i2 = torch.tensor([len(waveform_i2)], device=self.embed_tokens.weight.device, dtype=torch.int32)
         wavs_i2 = waveform_i2.unsqueeze(0)
         sample_i2_embeds = self.get_embedding_from_wav(wavs_i2, wavs_len_i2)
-        # utils_file.logging_limit_print('get_embeds_from_wav_path(): sample_i2_embeds.shape:', sample_i2_embeds.shape)
         return sample_i2_embeds
 
     def _add_bos_eos(self, bos, eos, inputs_embeds, attention_mask, target=None):
@@ -539,17 +491,12 @@ class LLMASR_Model(nn.Module):
                 output_hidden_states=True
             )
             cache = llm_out.past_key_values
-            hidden_states = llm_out.hidden_states[-1]  # 最后一层的
+            hidden_states = llm_out.hidden_states[-1] 
             token_logits_1 = self.lm_head(hidden_states)
-            # utils_file.logging_limit_print(f'token_logits_1.shape:{token_logits_1.shape}')
             token_logits_2 = self.speaker_head(hidden_states)
-            # utils_file.logging_limit_print(f'token_logits_2.shape:{token_logits_2.shape}')
             big_logits = torch.cat([token_logits_1, token_logits_2], dim=-1)
-            # utils_file.logging_limit_print(f'big_logits.shape:{big_logits.shape}')
-            logp = torch.nn.functional.log_softmax(big_logits[:, -1, :], dim=-1)  # 取了最后一个
-            # utils_file.logging_limit_print(f'logp.shape:{logp.shape}')
+            logp = torch.nn.functional.log_softmax(big_logits[:, -1, :], dim=-1)  
             max_index = torch.argmax(logp, dim=-1, keepdim=True)
-            # utils_file.logging_limit_print(f'max_index.shape:{max_index.shape}')
             utils_file.logging_limit_print(f'max_index:{max_index}')
 
             hyps = torch.cat((hyps, max_index),
@@ -571,7 +518,6 @@ class LLMASR_Model(nn.Module):
                 token_res.append(str((i - 152064).item()))
         str_i = self.tokenizer.decode(text_res, skip_special_tokens=True, add_special_tokens=False)
         return [str_i + " | " + " ".join(token_res)]
-        # output_text = self.tokenizer.batch_decode(outputs, add_special_tokens=False, skip_special_tokens=True)
 
     def infer_for_text2token(  # text2token
             self,
@@ -582,9 +528,6 @@ class LLMASR_Model(nn.Module):
     ):
         if text is not None:
             prompt = torch.cat((prompt, text), dim=1)
-        # speech_embeds, speech_masks = self.get_embedding_from_wav(wavs, wavs_len)
-        # speech_embeds, speech_masks, _ = self._add_bos_eos(0 + self.speech_token_num, None,
-        #                                                    speech_embeds, speech_masks, None)
         labels_lengths = torch.tensor([len(text)-1], dtype=torch.int64)
         labels = text[:,:-1]
         labels_pad_mask = make_pad_mask(labels_lengths)  # B, L
@@ -626,15 +569,10 @@ class LLMASR_Model(nn.Module):
             cache = llm_out.past_key_values
             hidden_states = llm_out.hidden_states[-1]  # 最后一层的
             token_logits_1 = self.lm_head(hidden_states)
-            # utils_file.logging_limit_print(f'token_logits_1.shape:{token_logits_1.shape}')
             token_logits_2 = self.speaker_head(hidden_states)
-            # utils_file.logging_limit_print(f'token_logits_2.shape:{token_logits_2.shape}')
             big_logits = torch.cat([token_logits_1, token_logits_2], dim=-1)
-            # utils_file.logging_limit_print(f'big_logits.shape:{big_logits.shape}')
             logp = torch.nn.functional.log_softmax(big_logits[:, -1, :], dim=-1)  # 取了最后一个
-            # utils_file.logging_limit_print(f'logp.shape:{logp.shape}')
             max_index = torch.argmax(logp, dim=-1, keepdim=True)
-            # utils_file.logging_limit_print(f'max_index.shape:{max_index.shape}')
             utils_file.logging_limit_print(f'max_index:{max_index}')
 
             hyps = torch.cat((hyps, max_index),
@@ -643,7 +581,7 @@ class LLMASR_Model(nn.Module):
                 token_emb = self.embed_tokens(hyps[:, -1:])
             else:
                 if max_index == 152064 + 4096 :
-                    utils_file.logging_limit_print(f'耿雪龙 遇到token结束符号，结束')
+                    utils_file.logging_limit_print(f'遇到token结束符号，结束')
                     break
                 token_emb = self.speech_token_emded(hyps[:, -1:])
         best_hyps = hyps[0, :]
@@ -656,4 +594,3 @@ class LLMASR_Model(nn.Module):
                 token_res.append(str((i - 152064).item()))
         str_i = self.tokenizer.decode(text_res, skip_special_tokens=True, add_special_tokens=False)
         return [str_i + " | " + " ".join(token_res)]
-        # output_text = self.tokenizer.batch_decode(outputs, add_special_tokens=False, skip_special_tokens=True)

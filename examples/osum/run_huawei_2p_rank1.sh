@@ -2,7 +2,6 @@
 
 . ./path.sh || exit 1;
 
-# Automatically detect number of gpus
 if command -v nvidia-smi &> /dev/null; then
   num_gpus=$(nvidia-smi -L | wc -l)
   gpu_list=$(seq -s, 0 $((num_gpus-1)))
@@ -11,7 +10,6 @@ else
   gpu_list="-1"
 fi
 export HCCL_CONNECT_TIMEOUT=1200
-# export ASCEND_LAUNCH_BLOCKING=1
 export CPU_AFFINITY_CONF=1 # 绑核
 export TASK_QUEUE_ENABLE=2 # 优化下发队列
 export CUDA_VISIBLE_DEVICES="0,1,2,3,4,5,6,7"
@@ -25,17 +23,15 @@ else
   IFS=',' read -r -a device_ids <<< "$cuda_visible_devices"
   echo "Using CUDA_VISIBLE_DEVICES: $cuda_visible_devices"
 fi
-# shellcheck disable=SC2145
+
 echo "Parsed device_ids: ${device_ids[@]}"
 
 stage=0
 stop_stage=0
 
-# You should change the following two parameters for multiple machine training,
-# see https://pytorch.org/docs/stable/elastic/run.html
-HOST_NODE_ADDR=192.168.0.15
+HOST_NODE_ADDR=***  # IP address of the machine where the master node is located, such as 192.168.0.1
 HOST_PORT=29401
-# HOST_NODE_ADDR="127.0.0.1:29401"
+
 num_nodes=3
 job_id=2023
 
@@ -50,7 +46,7 @@ mkdir -p $data
 
 
 data_type=shard_full_data
-train_data=$data/tmp/tmp_1.list
+train_data=$data/tmp/tmp_master.list
 python osum_utils/handle_data_for_weight.py $gxl_data_json_info_path $train_data
 cv_data=$data/asr_cv.list
 head -n 1 $train_data > $cv_data
@@ -75,7 +71,6 @@ length_penalty=0.0
 decode_batch=10
 deepspeed_config=conf/ds_stage2.json
 deepspeed_save_states="model+optimizer"
-
 
 
 . tools/parse_options.sh || exit 1;

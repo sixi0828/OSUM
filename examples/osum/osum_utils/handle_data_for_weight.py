@@ -3,8 +3,7 @@ import random
 from gxl_ai_utils.utils import utils_file
 
 data_config_path, tmp_file_path = utils_file.do_get_commandline_param(2)
-# random.seed(10086)# 老的
-random.seed(7890)# 尝试一下新的顺序  #7890
+random.seed(7890)
 data_info_dict = utils_file.load_dict_from_yaml(data_config_path)
 total_list = []
 for data_info in data_info_dict.values():
