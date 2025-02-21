@@ -58,9 +58,6 @@ def do_decode(input_wav_path, input_prompt):
     timestamp_ms = int(time.time() * 1000)
     now_file_tmp_path_resample = f'./.cache/.temp/{timestamp_ms}_resample.wav'
     do_resample(input_wav_path, now_file_tmp_path_resample)
-    # tmp_vad_path = f'/home/xlgeng/.cache/.temp/{timestamp_ms}_vad.wav'
-    # remove_silence_torchaudio_ends(now_file_tmp_path_resample, tmp_vad_path)
-    # input_wav_path  = tmp_vad_path
     input_wav_path = now_file_tmp_path_resample
     waveform, sample_rate = torchaudio.load(input_wav_path)
     waveform = waveform.squeeze(0)  # (channel=1, sample) -> (sample,)
