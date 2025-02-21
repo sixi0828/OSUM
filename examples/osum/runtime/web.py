@@ -78,7 +78,7 @@ def do_resample(input_wav_path, output_wav_path):
 def true_decode_fuc(input_wav_path, input_prompt):
     print(f"wav_path: {input_wav_path}, prompt:{input_prompt}")
     timestamp_ms = int(time.time() * 1000)
-    now_file_tmp_path_resample = f'/home/xlgeng/.cache/.temp/{timestamp_ms}_resample.wav'
+    now_file_tmp_path_resample = f'./.cache/.temp/{timestamp_ms}_resample.wav'
     do_resample(input_wav_path, now_file_tmp_path_resample)
     input_wav_path = now_file_tmp_path_resample
     waveform, sample_rate = torchaudio.load(input_wav_path)
@@ -109,12 +109,12 @@ def true_decode_fuc(input_wav_path, input_prompt):
     # feat_lens = feat_lens.half()
     res_text = model.generate(wavs=feat, wavs_len=feat_lens, prompt=input_prompt)[0]
     print("识别结果：", res_text)
-    return res_text, now_file_tmp_path_resample
+    return res_text
 
 def do_decode(input_wav_path, input_prompt):
     print(f'input_wav_path= {input_wav_path}, input_prompt= {input_prompt}')
     # 省略处理逻辑
-    output_res, now_file_tmp_path_resample= true_decode_fuc(input_wav_path, input_prompt)
+    output_res = true_decode_fuc(input_wav_path, input_prompt)
     return output_res
 
 def save_to_jsonl(if_correct, wav, prompt, res):

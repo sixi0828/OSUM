@@ -56,7 +56,7 @@ def do_decode(input_wav_path, input_prompt):
     # input_prompt = TASK_PROMPT_MAPPING.get(input_prompt, "未知任务类型")
     print(f"wav_path: {input_wav_path}, prompt:{input_prompt}")
     timestamp_ms = int(time.time() * 1000)
-    now_file_tmp_path_resample = f'/home/xlgeng/.cache/.temp/{timestamp_ms}_resample.wav'
+    now_file_tmp_path_resample = f'./.cache/.temp/{timestamp_ms}_resample.wav'
     do_resample(input_wav_path, now_file_tmp_path_resample)
     # tmp_vad_path = f'/home/xlgeng/.cache/.temp/{timestamp_ms}_vad.wav'
     # remove_silence_torchaudio_ends(now_file_tmp_path_resample, tmp_vad_path)
