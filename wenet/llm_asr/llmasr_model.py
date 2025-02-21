@@ -90,7 +90,7 @@ class LLMASR_Model(nn.Module):
         # lora
         self.lora = lora
         if lora:
-            utils_file.logging_limit_print("耿雪龙： 使用lora了")
+            utils_file.logging_limit_print("OSUM: 使用lora了")
             target_modules = ['q_proj', 'k_proj', 'v_proj', 'o_proj', 'gate_proj', 'down_proj']
             if is_inference:
                 self.peft_config = LoraConfig(
@@ -140,7 +140,6 @@ class LLMASR_Model(nn.Module):
         self.speech_token_num = speech_token_num
         # init speech token module
         if speech_token_num > 0:
-            utils_file.logging_info(f'耿雪龙： 进行语音token生成任务， speech_token_num: {speech_token_num}')
             self.speech_token_emded = torch.nn.Embedding(speech_token_num + 2, self.llama_model.config.hidden_size)
             self.speaker_head = torch.nn.Linear(self.llama_model.config.hidden_size, speech_token_num)
         else:
@@ -148,7 +147,6 @@ class LLMASR_Model(nn.Module):
             self.speaker_head = nn.Identity()
             self.speech_token_emded = nn.Identity()
         self.train_speech_out = train_speech_out
-        utils_file.logging_info(f'耿雪龙： 是否进行语音输出训练：{self.train_speech_out}')
         self.loss_fct = CrossEntropyLoss(reduction='mean')
 
     def get_label_embedding(self, labels, labels_lengths):
@@ -322,7 +320,7 @@ class LLMASR_Model(nn.Module):
             embeds = torch.cat([prompt_embeds, speech_embeds], dim=1)
         else:
             embeds = speech_embeds
-        
+
         atts = torch.ones(embeds.size()[:-1], dtype=torch.long).to(embeds.device)
 
         if self.embed_tokens.weight.dtype == torch.float16 or self.embed_tokens.weight.dtype == torch.bfloat16:
@@ -491,11 +489,11 @@ class LLMASR_Model(nn.Module):
                 output_hidden_states=True
             )
             cache = llm_out.past_key_values
-            hidden_states = llm_out.hidden_states[-1] 
+            hidden_states = llm_out.hidden_states[-1]
             token_logits_1 = self.lm_head(hidden_states)
             token_logits_2 = self.speaker_head(hidden_states)
             big_logits = torch.cat([token_logits_1, token_logits_2], dim=-1)
-            logp = torch.nn.functional.log_softmax(big_logits[:, -1, :], dim=-1)  
+            logp = torch.nn.functional.log_softmax(big_logits[:, -1, :], dim=-1)
             max_index = torch.argmax(logp, dim=-1, keepdim=True)
             utils_file.logging_limit_print(f'max_index:{max_index}')
 
@@ -505,7 +503,7 @@ class LLMASR_Model(nn.Module):
                 token_emb = self.embed_tokens(hyps[:, -1:])
             else:
                 if max_index == 152064 + 4096:
-                    utils_file.logging_limit_print(f'耿雪龙 遇到token结束符号，结束')
+                    utils_file.logging_limit_print(f'OSUM: 遇到token结束符号，结束')
                     break
                 token_emb = self.speech_token_emded(hyps[:, -1:])
         best_hyps = hyps[0, :]

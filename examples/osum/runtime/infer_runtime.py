@@ -89,7 +89,7 @@ def do_decode(input_wav_path, input_prompt):
     # feat = feat.half()
     # feat_lens = feat_lens.half()
     res_text = model.generate(wavs=feat, wavs_len=feat_lens, prompt=input_prompt)[0]
-    print("耿雪龙哈哈：", res_text)
+    print("识别结果：", res_text)
     return res_text
 
 
