@@ -94,5 +94,12 @@ pip install requirements.txt
 
 私たちの研究チームまたは製品チームにメッセージを残したい場合は、`xlgeng@mail.nwpu.edu.cn` までメールを送信してください。
 <p align="center">
-    <img src="images/ASLP.jpg" width="400"/>
-<p>
+    <a href="http://www.nwpu-aslp.org/">
+        <img src="images/ASLP.jpg" width="400"/>
+    </a>
+</p>
+<p align="center">
+    <a href="https://wenet.org.cn/">
+        <img src="images/wenet.png" width="400"/>
+    </a>
+</p>
