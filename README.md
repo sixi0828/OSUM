@@ -106,3 +106,8 @@ If you are interested to leave a message to either our research team or product 
         <img src="images/ASLP.jpg" width="400"/>
     </a>
 </p>
+<p align="center">
+    <a href="https://wenet.org.cn/">
+        <img src="images/wenet.jpg" width="400"/>
+    </a>
+</p>
