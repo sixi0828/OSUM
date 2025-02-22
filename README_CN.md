@@ -94,7 +94,7 @@ pip install requirements.txt
 ```
 ## Contact Us
 
-如果您有兴趣向我们的研究团队或产品团队留言，欢迎发送电子邮件至 `xlgeng@mail.nwpu.edu.cn`。
+如果您有兴趣向我们的研究团队留言，欢迎发送电子邮件至 `xlgeng@mail.nwpu.edu.cn`。
 <p align="center">
     <a href="http://www.nwpu-aslp.org/">
         <img src="images/ASLP.jpg" width="400"/>
