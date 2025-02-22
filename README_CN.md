@@ -1,5 +1,5 @@
  <p align="left">
-        &nbsp中文&nbsp&nbsp ｜ <a href="README.md">English</a> &nbsp
+        &nbsp中文&nbsp&nbsp ｜ <a href="README.md">English</a> &nbsp ｜ <a href="README_JP.md">日本語</a> &nbsp
 </p>
 <p align="center">
    <h1>OSUM: Advancing Open Speech Understanding Models with Limited Resources in Academia</h1>
