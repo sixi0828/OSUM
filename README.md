@@ -102,5 +102,7 @@ We use the Apache 2.0 license. Researchers and developers are free to use the co
 If you are interested to leave a message to either our research team or product team, feel free to send an email to `xlgeng@mail.nwpu.edu.cn`.
 
 <p align="center">
-    <img src="images/ASLP.jpg" width="400"/>
-<p>
+    <a href="http://www.nwpu-aslp.org/">
+        <img src="images/ASLP.jpg" width="400"/>
+    </a>
+</p>
