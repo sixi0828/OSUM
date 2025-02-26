@@ -599,9 +599,6 @@ def tokenize(data, tokenizer: BaseTokenizer, global_prompt_dict=None):
             if "<STYLE>" in sample['task']:
                 txt = replace_keys_in_brackets(sample['txt'], global_style_dict)
             else:
-                sample['task'] = task_name
-                txt = sample['txt']
-            else:
                 txt = sample['txt']
         else:
             txt = sample['txt']
