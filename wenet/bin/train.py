@@ -53,7 +53,7 @@ except ImportError:
 torch.backends.cudnn.allow_tf32 = False
 torch.backends.cuda.matmul.allow_tf32 = False
 
-from msprobe.pytorch import seed_all
+# from msprobe.pytorch import seed_all
 import gc
 # from patches import modelling_qwen2_patch
 
@@ -105,7 +105,7 @@ def main():
     random.seed(777)
     np.random.seed(777)
     utils_file.logging_info('开始严格seed')
-    seed_all(777)
+    # seed_all(777)
     utils_file.logging_info('结束严格seed')
     logging.info('Random seed set to {}'.format(777))
     
