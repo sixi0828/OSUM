@@ -60,27 +60,20 @@ class Executor:
         else:
             model_context = nullcontext
         continue_data = info_dict['dataset_conf'].get('continue_data', True)
-        utils_file.logging_info(f'gengxuelong -------- continue_data: {continue_data}')
+        utils_file.logging_info(f'continue_data: {continue_data}')
         with model_context():
             logging.info(f'init_batch_num: {init_batch_num}')
             for batch_idx, batch_dict in enumerate(train_data_loader):
                 if continue_data and batch_idx < init_batch_num:
                     if batch_idx %100 == 0:
-                        logging.info(f'gengxuelong skipping: batch_idx {batch_idx}')
+                        logging.info(f'skipping: batch_idx {batch_idx}')
                     continue
                 if batch_idx %100 == 0:
-                        logging.info(f'gengxuelong using: batch_idx {batch_idx}')
+                        logging.info(f'using: batch_idx {batch_idx}')
                     
                 info_dict["tag"] = "TRAIN"
                 info_dict["step"] = self.step
                 info_dict["batch_idx"] = batch_idx
-                # if wenet_join(group_join, info_dict):
-                #     break
-                # rank = int(os.environ.get('RANK', 0))
-                # if batch_idx < 2400+3472+200    : # 2400+3572的位置会卡着，试着直接跳过他试试.双机器（调过顺序） 2400+3472+2840会卡着。三机器调过顺序后再 2400+3472+268会卡着
-                #     if (rank == 0):
-                #         print(f'batch_idx: {batch_idx}')
-                #     continue
 
                 if batch_dict["target_lengths"].size(0) == 0:
                     continue
