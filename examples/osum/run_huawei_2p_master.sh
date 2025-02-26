@@ -78,7 +78,7 @@ deepspeed_save_states="model+optimizer"
 if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
   mkdir -p $dir
   num_gpus=$(echo $CUDA_VISIBLE_DEVICES | awk -F "," '{print NF}')
-  dist_backend="hccl"
+  dist_backend="hccl"  #  attention!!!  hccl is used for npu and nccl is used for gpu
   if [ ${train_engine} == "deepspeed" ]; then
     echo "$0: using deepspeed"
   else

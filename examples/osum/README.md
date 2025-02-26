@@ -76,7 +76,7 @@ task="<TRANSCRIBE><GENDER>"  # This tag is used for the ASR + gender task
 
 ### Select the appropriate GPU/NPU
 
-The OSUM model is trained on Huawei Ascend 910B, but the training and inference codes support both GPU and NPU.
+The OSUM model is trained on Huawei Ascend 910B, but the training and inference codes support both GPU and NPU. If training on a GPU, please set `train_backend` to `nccl` instead of `hccl` in the startup script.
 
 The inference of this project roughly requires 20G of video memory. If you have such a graphics card on your machine, set the serial number of the graphics card on which you want to perform inference:
 
