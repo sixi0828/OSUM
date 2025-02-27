@@ -18,3 +18,4 @@ sox
 deepspeed
 librosa
 gxl_ai_utils
+gradio
