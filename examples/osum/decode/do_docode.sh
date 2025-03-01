@@ -4,6 +4,7 @@
 
 data_type= # raw  shard_full_data
 data_path=
+ref_path=
 gpu_id=
 ckpt_path=
 task=
@@ -67,7 +68,7 @@ python wenet/bin/recognize4llmasr.py --gpu ${gpu_id} \
 mkdir -p ${result_dir}
 for mode in ${decode_modes}; do
   python tools/compute-wer.py --char=1 --v=1 \
-    $test_data_dir/$testset/text $result_dir/$mode/text > $result_dir/$mode/wer
+    $ref_path $result_dir/$mode/text > $result_dir/$mode/wer
 done
 # done
 
