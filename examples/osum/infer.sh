@@ -6,7 +6,7 @@ prompt_file=conf/prompt_stage4.yaml
 ckpt_path=***  
 
 data_path=***
-ref_path=***  # 参考音频路径，用于计算wer, 其格式为scp文件的格式，每一行形如“key wav_path”,其可以用空格或者tab分隔
+ref_path=***  # 参考音频路径，用于计算wer, 其格式为scp文件的格式，每一行形如“key 真实答案”,其可以用空格或者tab分隔
 # raw: jsonl格式，每行一个json字符串，至少包含key wav  txt
 # shard_full_data: 每行一个shard文件路径
 data_type="raw" #  raw or shard_full_data
