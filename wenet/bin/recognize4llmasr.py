@@ -32,7 +32,11 @@ from wenet.utils.init_tokenizer import init_tokenizer
 from wenet.utils.context_graph import ContextGraph
 from wenet.utils.ctc_utils import get_blank_id
 from wenet.utils.common import TORCH_NPU_AVAILABLE  # noqa just ensure to check torch-npu
-import torch_npu
+try:
+    import torch_npu
+except ImportError:
+    print(f'torch_npu not found, please install it if you want to use npu')
+    pass
 
 def get_args():
     parser = argparse.ArgumentParser(description='recognize with your model')
