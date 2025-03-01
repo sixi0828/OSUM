@@ -32,10 +32,12 @@ from wenet.utils.init_tokenizer import init_tokenizer
 from wenet.utils.context_graph import ContextGraph
 from wenet.utils.ctc_utils import get_blank_id
 from wenet.utils.common import TORCH_NPU_AVAILABLE  # noqa just ensure to check torch-npu
+if_npu = True
 try:
     import torch_npu
 except ImportError:
     print(f'torch_npu not found, please install it if you want to use npu')
+    if_npu = False
     pass
 
 def get_args():
@@ -215,7 +217,10 @@ def main():
 
     if args.gpu != -1:
         # remain the original usage of gpu
-        args.device = f"npu:{args.gpu}"
+        if if_npu:
+            args.device = f"npu:{args.gpu}"
+        else:
+            args.device = f"cuda:{args.gpu}"
     if "cuda" in args.device:
         os.environ['CUDA_VISIBLE_DEVICES'] = str(args.gpu)
 
