@@ -335,8 +335,6 @@ def filter(data,
 
         # filter for shard_in_common
         if filter_no_extra_info:
-            if 'lang' not in sample:
-                continue
             if 'task' not in sample:
                 continue
 
