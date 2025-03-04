@@ -80,7 +80,7 @@ dataset_conf:
   split_num: 1 # 25000tar -> /split_Num 1000 
   multi_num: 1 # 2 
   prompt_conf_path: conf/prompt_config.yaml
-  continue_data: true
+  continue_data: false
 
  
 
