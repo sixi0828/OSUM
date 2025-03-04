@@ -8,7 +8,7 @@
 # 新创建一个conda环境
 conda create -n OSUM python=3.10
 # 激活新创建的环境
-conda create OSUM
+conda activate OSUM
 # 下载我们的代码并安装需要的python包
 git clone https://github.com/ASLP-lab/OSUM.git
 cd OSUM
