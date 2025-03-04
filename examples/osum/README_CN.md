@@ -13,7 +13,7 @@ conda create OSUM
 git clone https://github.com/ASLP-lab/OSUM.git
 cd OSUM
 # 如果你在gpu训练，请先删除 requirements.txt 中torch_npu的条目，如果是npu上，则无需操作。
-git install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
 ## 推理
