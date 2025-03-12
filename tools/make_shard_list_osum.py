@@ -13,7 +13,6 @@ import json
 import torch
 import torchaudio
 from tqdm import tqdm  # 需要安装 tqdm 库
-from gxl_ai_utils.utils import utils_file
 
 AUDIO_FORMAT_SETS = set(['flac', 'mp3', 'm4a', 'ogg', 'opus', 'wav', 'wma'])
 

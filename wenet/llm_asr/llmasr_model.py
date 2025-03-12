@@ -80,8 +80,8 @@ class LLMASR_Model(nn.Module):
         self.min_length = 1
         self.num_beams = 4
         self.do_sample = True
-        self.top_p = 0.0
-        self.top_k = 0
+        self.top_p = 0.9
+        self.top_k = 5
         self.repetition_penalty = 1.05
         self.length_penalty = 1.0
         self.temperature = 1.0
