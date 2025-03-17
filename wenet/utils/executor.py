@@ -117,12 +117,12 @@ class Executor:
                     import torch.distributed as dist
                     # Ensure all ranks start CV at the same time in step mode
                     dist.barrier()
-                    # loss_dict = self.cv(model, cv_data_loader, configs)
+                    loss_dict = self.cv(model, cv_data_loader, configs)
                     model.train()
                     info_dict.update({
                         "tag":
                         "step_{}".format(self.step),
-                        "loss_dict": {'loss':999,'acc':999},
+                        "loss_dict": loss_dict,
                         "save_time":
                         datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S'),
                         "lrs":

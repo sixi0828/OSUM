@@ -49,7 +49,7 @@ data_type=shard_full_data
 train_data=$data/tmp/tmp_master.list
 python osum_utils/handle_data_for_weight.py $gxl_data_json_info_path $train_data
 cv_data=$data/asr_cv.list
-head -n 1 $train_data > $cv_data
+#head -n 1 $train_data > $cv_data
 
 train_engine=deepspeed # torch_ddp
 
