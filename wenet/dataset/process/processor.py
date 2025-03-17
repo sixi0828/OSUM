@@ -326,7 +326,7 @@ def filter(data,
             print(f'error , txt is None, continue, old txt: {sample["txt"]}, task: {sample["task"]}')
             continue 
         #if txt == "<None>" or txt == "<NONE>" or txt == "<none>" or txt == "None" or txt == "none" or txt == "NONE":
-        if "<None>" in txt or "<NONE>" in txt or "<none>" in txt or "None" in txt or "none" in txt or "NONE" in txt:
+        if "<None>" in txt or "<NONE>" in txt or "<none>" in txt:
             print(f'error , txt is None, continue, old txt: {sample["txt"]}, task: {sample["task"]}')
             continue
 
