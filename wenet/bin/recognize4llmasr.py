@@ -327,10 +327,6 @@ def main():
                 import random
                 if '><' in args.task:
                     args.task = args.task.replace('><', '> <')
-                if args.task == "<TRANSCRIBE>" or args.task == "<transcribe>":
-                    is_truncation = False
-                else:
-                    is_truncation = True
                 random_index = random.randint(0, len(global_prompt_dict[args.task])-1)
                 prompt = global_prompt_dict[args.task][random_index]
                 extro_info = batch["extra"] if "extra" in batch else [{}]
@@ -339,11 +335,8 @@ def main():
                     prompt = extro_info[0]['question']
                 utils_file.logging_limit_print(args.task, prompt)
                 if prompt == "<no_prompt>":
-                    print(f'xixixixix')
-
-                # res_text = model.infer_for_speech2text_token(wavs=feats, wavs_len=feats_lengths, prompt=prompt, text=target)
+                    print(f'no prompt for {keys[0]}')
                 res_text = model.generate(wavs=feats, wavs_len=feats_lengths, prompt=prompt)
-                # res_text = model.infer_for_text2token(wavs=feats, wavs_len=feats_lengths, prompt=prompt, text=target)
                 for mode in modes:
                     line = "{}\t{}".format(keys[0], res_text[0])
                     files[mode].write(line+'\n')
