@@ -220,7 +220,7 @@ def main():
         if if_npu:
             args.device = f"npu:{args.gpu}"
         else:
-            args.device = f"cuda:{args.gpu}"
+            args.device = f"cuda"
     if "cuda" in args.device:
         os.environ['CUDA_VISIBLE_DEVICES'] = str(args.gpu)
 
