@@ -70,9 +70,9 @@ def init_llmasr(args, configs, is_inference=False):
     # utils_file.print_model_size(model.speech_transformer)
     # utils_file.print_model_size(model.speech_llama_proj)
 
-    logging.info(f'耿雪龙：init_salmonn()：开始加载初始化模型')
+    logging.info(f'init_salmonn()：开始加载初始化模型')
     if hasattr(args, 'checkpoint') and args.checkpoint is not None:
-        logging.info(f'耿雪龙： 设置了初始化模型位置，开始加载，参数文件位置：{args.checkpoint}')
+        logging.info(f' 设置了初始化模型位置，开始加载，参数文件位置：{args.checkpoint}')
         infos = load_checkpoint(model, args.checkpoint)
     elif hasattr(args, 'checkpoint') and args.enc_init is not None:
         infos = load_trained_modules(model, args)
@@ -83,21 +83,17 @@ def init_llmasr(args, configs, is_inference=False):
         infos = {}
     configs["init_infos"] = infos
     print(configs)
-    logging.info('耿雪龙：加载初始化模型完毕')
+    logging.info('加载初始化模型完毕')
 
     if not is_inference:
-        logging.info('耿雪龙：不更换LLM的参数')
-        # logging.info('耿雪龙: 开始更换LLM的参数')
-        # checkpoint4llm_wrapper = "/home/work_nfs8/xlgeng/new_workspace/wenet_gxl_salmonn4ft_LLM/examples/aishell/ft_LLM/exp/ft_2B_v1/1_epoch/step_34272.pt"
-        # load_checkpoint(model, checkpoint4llm_wrapper)
-        # logging.info('耿雪龙: 更换LLM的参数完毕')
+        logging.info('不更换LLM的参数')
     else:
-        logging.info('耿雪龙: 不更换LLM的参数')
+        logging.info('不更换LLM的参数')
 
-    logging.info('耿雪龙：开始选择性冻结模块')
+    logging.info('开始选择性冻结模块')
     fire_module = configs.get("fire_module", None)
     if fire_module is None:
-        logging.info('耿雪龙：没有选择解冻的模块,也就是没有训练参数，直接报错返回')
+        logging.info('没有选择解冻的模块,也就是没有训练参数，直接报错返回')
         raise ValueError('没有选择解冻的模块,也就是没有训练参数，直接报错返回')
     for k, p in model.named_parameters():
         # if k.startswith("llama_model") or k.startswith("speech_encoder"):
@@ -119,6 +115,6 @@ def init_llmasr(args, configs, is_inference=False):
         elif fire_module == "link_and_encoder_and_lora":
             break
         logging.info(f"{k} {p.requires_grad}")
-    logging.info('耿雪龙：冻结完毕')
+    logging.info('冻结完毕')
 
     return model, configs

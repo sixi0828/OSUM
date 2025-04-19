@@ -46,7 +46,7 @@ dataset_conf:
     min_length: 0
     token_max_length: 200
     token_min_length: 1
-    filter_no_extra_info: true # 如果没有task lang 等信息,直接过滤掉, 适用于通用多任务训练, 推理时应该关掉
+    filter_no_extra_info: true # 如果没有task  等信息,直接过滤掉, 适用于通用多任务训练, 推理时应该关掉
     max_seq_len: 1000 #1000
   language_conf:
     limited_langs:
@@ -80,7 +80,7 @@ dataset_conf:
   split_num: 1 # 25000tar -> /split_Num 1000 
   multi_num: 1 # 2 
   prompt_conf_path: conf/prompt_config.yaml
-  continue_data: true
+  continue_data: false
 
  
 

@@ -32,7 +32,13 @@ from wenet.utils.init_tokenizer import init_tokenizer
 from wenet.utils.context_graph import ContextGraph
 from wenet.utils.ctc_utils import get_blank_id
 from wenet.utils.common import TORCH_NPU_AVAILABLE  # noqa just ensure to check torch-npu
-import torch_npu
+if_npu = True
+try:
+    import torch_npu
+except ImportError:
+    print(f'torch_npu not found, please install it if you want to use npu')
+    if_npu = False
+    pass
 
 def get_args():
     parser = argparse.ArgumentParser(description='recognize with your model')
@@ -211,7 +217,10 @@ def main():
 
     if args.gpu != -1:
         # remain the original usage of gpu
-        args.device = f"npu:{args.gpu}"
+        if if_npu:
+            args.device = f"npu:{args.gpu}"
+        else:
+            args.device = f"cuda"
     if "cuda" in args.device:
         os.environ['CUDA_VISIBLE_DEVICES'] = str(args.gpu)
 
@@ -318,10 +327,6 @@ def main():
                 import random
                 if '><' in args.task:
                     args.task = args.task.replace('><', '> <')
-                if args.task == "<TRANSCRIBE>" or args.task == "<transcribe>":
-                    is_truncation = False
-                else:
-                    is_truncation = True
                 random_index = random.randint(0, len(global_prompt_dict[args.task])-1)
                 prompt = global_prompt_dict[args.task][random_index]
                 extro_info = batch["extra"] if "extra" in batch else [{}]
@@ -330,11 +335,8 @@ def main():
                     prompt = extro_info[0]['question']
                 utils_file.logging_limit_print(args.task, prompt)
                 if prompt == "<no_prompt>":
-                    print(f'xixixixix')
-
-                # res_text = model.infer_for_speech2text_token(wavs=feats, wavs_len=feats_lengths, prompt=prompt, text=target)
+                    print(f'no prompt for {keys[0]}')
                 res_text = model.generate(wavs=feats, wavs_len=feats_lengths, prompt=prompt)
-                # res_text = model.infer_for_text2token(wavs=feats, wavs_len=feats_lengths, prompt=prompt, text=target)
                 for mode in modes:
                     line = "{}\t{}".format(keys[0], res_text[0])
                     files[mode].write(line+'\n')

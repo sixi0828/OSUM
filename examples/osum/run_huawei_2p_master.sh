@@ -49,7 +49,7 @@ data_type=shard_full_data
 train_data=$data/tmp/tmp_master.list
 python osum_utils/handle_data_for_weight.py $gxl_data_json_info_path $train_data
 cv_data=$data/asr_cv.list
-head -n 1 $train_data > $cv_data
+#head -n 1 $train_data > $cv_data
 
 train_engine=deepspeed # torch_ddp
 
@@ -78,7 +78,7 @@ deepspeed_save_states="model+optimizer"
 if [ ${stage} -le 0 ] && [ ${stop_stage} -ge 0 ]; then
   mkdir -p $dir
   num_gpus=$(echo $CUDA_VISIBLE_DEVICES | awk -F "," '{print NF}')
-  dist_backend="hccl"
+  dist_backend="hccl"  #  attention!!!  hccl is used for npu and nccl is used for gpu
   if [ ${train_engine} == "deepspeed" ]; then
     echo "$0: using deepspeed"
   else

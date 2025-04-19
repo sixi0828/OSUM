@@ -168,9 +168,6 @@ class Conv1dSubsampling2(BaseSubsampling):
         x_old = x.transpose(1, 2)  # (b, f, t)
         x = self.conv(x_old)
         x = x.transpose(1, 2)  # (b, t, f)
-        # x = torch.load(
-        #     "/mnt/sfs/asr/code/wenet_undersdand_and_speech_xlgeng/examples/wenetspeech/whisper/dump/gpu/step0/rank0/dump_tensor_data/Tensor.transpose.1.forward.output.0.pt")
-        # x = x.to(x_old.device)
         x, pos_emb = self.pos_enc(x, offset)
         return x, pos_emb, x_mask[:, :, (time + 1) % 2::2]
 

@@ -8,12 +8,12 @@
 # 新创建一个conda环境
 conda create -n OSUM python=3.10
 # 激活新创建的环境
-conda create OSUM
+conda activate OSUM
 # 下载我们的代码并安装需要的python包
 git clone https://github.com/ASLP-lab/OSUM.git
 cd OSUM
 # 如果你在gpu训练，请先删除 requirements.txt 中torch_npu的条目，如果是npu上，则无需操作。
-git install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
 ## 推理
@@ -74,7 +74,7 @@ OSUM当前开源版本支持多个任务，你可以根据OSUM/examples/osum/con
 
 ### 选择合适的gpu/npu
 
-OSUM模型在华为升腾910B上进行训练的，但训练和推理代码均同时支持gpu和npu。
+OSUM模型在华为升腾910B上进行训练的，但训练和推理代码均同时支持gpu和npu。如果在gpu上训练，请在启动脚本中设置将train_backend设置为nccl，而非hccl。
 
 我们本项目的推理大致需要20G的显存。如果你机器上有这样的显卡，设置你希望在其上推理的显卡序号：
 

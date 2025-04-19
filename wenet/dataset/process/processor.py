@@ -326,7 +326,7 @@ def filter(data,
             print(f'error , txt is None, continue, old txt: {sample["txt"]}, task: {sample["task"]}')
             continue 
         #if txt == "<None>" or txt == "<NONE>" or txt == "<none>" or txt == "None" or txt == "none" or txt == "NONE":
-        if "<None>" in txt or "<NONE>" in txt or "<none>" in txt or "None" in txt or "none" in txt or "NONE" in txt:
+        if "<None>" in txt or "<NONE>" in txt or "<none>" in txt:
             print(f'error , txt is None, continue, old txt: {sample["txt"]}, task: {sample["task"]}')
             continue
 
@@ -335,8 +335,6 @@ def filter(data,
 
         # filter for shard_in_common
         if filter_no_extra_info:
-            if 'lang' not in sample:
-                continue
             if 'task' not in sample:
                 continue
 
@@ -598,9 +596,6 @@ def tokenize(data, tokenizer: BaseTokenizer, global_prompt_dict=None):
             task_name = sample['task']
             if "<STYLE>" in sample['task']:
                 txt = replace_keys_in_brackets(sample['txt'], global_style_dict)
-            else:
-                sample['task'] = task_name
-                txt = sample['txt']
             else:
                 txt = sample['txt']
         else:

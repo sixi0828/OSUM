@@ -80,8 +80,8 @@ class LLMASR_Model(nn.Module):
         self.min_length = 1
         self.num_beams = 4
         self.do_sample = True
-        self.top_p = 0.0
-        self.top_k = 0
+        self.top_p = 0.9
+        self.top_k = 5
         self.repetition_penalty = 1.05
         self.length_penalty = 1.0
         self.temperature = 1.0
@@ -90,7 +90,7 @@ class LLMASR_Model(nn.Module):
         # lora
         self.lora = lora
         if lora:
-            utils_file.logging_limit_print("耿雪龙： 使用lora了")
+            utils_file.logging_limit_print("OSUM: 使用lora了")
             target_modules = ['q_proj', 'k_proj', 'v_proj', 'o_proj', 'gate_proj', 'down_proj']
             if is_inference:
                 self.peft_config = LoraConfig(
@@ -140,7 +140,6 @@ class LLMASR_Model(nn.Module):
         self.speech_token_num = speech_token_num
         # init speech token module
         if speech_token_num > 0:
-            utils_file.logging_info(f'耿雪龙： 进行语音token生成任务， speech_token_num: {speech_token_num}')
             self.speech_token_emded = torch.nn.Embedding(speech_token_num + 2, self.llama_model.config.hidden_size)
             self.speaker_head = torch.nn.Linear(self.llama_model.config.hidden_size, speech_token_num)
         else:
@@ -148,7 +147,6 @@ class LLMASR_Model(nn.Module):
             self.speaker_head = nn.Identity()
             self.speech_token_emded = nn.Identity()
         self.train_speech_out = train_speech_out
-        utils_file.logging_info(f'耿雪龙： 是否进行语音输出训练：{self.train_speech_out}')
         self.loss_fct = CrossEntropyLoss(reduction='mean')
 
     def get_label_embedding(self, labels, labels_lengths):
@@ -160,20 +158,6 @@ class LLMASR_Model(nn.Module):
         labels_mask = ~labels_pad_mask
         return labels_embeds, labels_target, labels_mask
 
-    def get_speech_token_label_embedding(self, speech_token_labels, speech_tokens_length):
-        """"""
-        speech_tokens_pad_mask = make_pad_mask(speech_tokens_length)  # B, L
-        speech_token_labels = speech_token_labels.masked_fill(speech_tokens_pad_mask, 0)
-        speech_token_labels_embeds = self.speech_token_emded(speech_token_labels)
-        utils_file.logging_limit_print(f'进行speech_token_labels修改，修改前 speech_token_labels',
-                                       speech_token_labels.shape, speech_token_labels[0][-1], speech_token_labels[0][0])
-        speech_token_labels = speech_token_labels + 152064
-        utils_file.logging_limit_print(f'进行speech_token_labels修改，修改后 speech_token_labels',
-                                       speech_token_labels.shape, speech_token_labels[0][-1], speech_token_labels[0][0])
-        speech_token_labels_target = speech_token_labels.masked_fill(speech_tokens_pad_mask, self.IGNORE_ID)  # B, L
-        speech_token_labels_mask = ~speech_tokens_pad_mask
-        return speech_token_labels_embeds, speech_token_labels_target, speech_token_labels_mask
-
     def forward(self,
                 batch,
                 device,
@@ -181,24 +165,12 @@ class LLMASR_Model(nn.Module):
         """"""
         rank = int(os.environ.get('RANK', 0))
         output_type = batch['output_type']
-        assert output_type in ['text', 'speech2text_token', 'text2token'], f"output_type:{output_type} not support"
-        # speech inputs
-        if output_type == 'text' or output_type == 'speech2text_token':
-            wavs = batch['feats'].to(device)
-            wavs_len = batch['feats_lengths'].to(device)
-            speech_embeds, speech_masks = self.get_embedding_from_wav(wavs, wavs_len)
-            speech_target = torch.full(speech_masks.shape, self.IGNORE_ID).to(
-                speech_embeds.device)
-        else:
-            labels = batch['target'].to(device)
-            labels_lengths = batch['target_lengths'].to(device)
-            #  text 2 token ,拿到文本序列
-            labels_pad_mask = make_pad_mask(labels_lengths)  # B, L
-            labels = labels.masked_fill(labels_pad_mask, 0)
-            speech_embeds = self.embed_tokens(labels)  # B, L, D
-            speech_target = torch.full(labels_pad_mask.shape, self.IGNORE_ID).to(
-                speech_embeds.device)
-            speech_masks = ~labels_pad_mask
+        assert output_type in ['text',], f"output_type:{output_type} not support"
+        wavs = batch['feats'].to(device)
+        wavs_len = batch['feats_lengths'].to(device)
+        speech_embeds, speech_masks = self.get_embedding_from_wav(wavs, wavs_len)
+        speech_target = torch.full(speech_masks.shape, self.IGNORE_ID).to(
+            speech_embeds.device)
 
         # add bos and eos
         speech_embeds, speech_masks, speech_target = self._add_bos_eos(0 + self.speech_token_num,
@@ -223,36 +195,7 @@ class LLMASR_Model(nn.Module):
         inputs_embeds_list = []
         attention_mask_list = []
         target_list = []
-        if output_type == 'speech2text_token':
-            labels = batch['target'].to(device)
-            labels_lengths = batch['target_lengths'].to(device)
-            speech_token_labels = batch['speech_tokens'].to(device)
-            speech_tokens_length = batch['speech_tokens_length'].to(device)
-
-            labels_embeds, labels_target, labels_mask = self.get_label_embedding(labels, labels_lengths)
-            speech_token_labels_embeds, speech_token_labels_target, speech_token_labels_mask = self.get_speech_token_label_embedding(
-                speech_token_labels, speech_tokens_length)
-
-            if prompt_embeds is not None:
-                inputs_embeds_list.append(prompt_embeds)
-                attention_mask_list.append(prompt_mask)
-                target_list.append(prompt_target)
-            inputs_embeds_list.extend([speech_embeds, labels_embeds, speech_token_labels_embeds])
-            attention_mask_list.extend([speech_masks, labels_mask, speech_token_labels_mask])
-            target_list.extend([speech_target, labels_target, speech_token_labels_target])
-        elif output_type == "text2token":
-            speech_token_labels = batch['speech_tokens'].to(device)
-            speech_tokens_length = batch['speech_tokens_length'].to(device)
-            speech_token_labels_embeds, speech_token_labels_target, speech_token_labels_mask = self.get_speech_token_label_embedding(
-                speech_token_labels, speech_tokens_length)
-            if prompt_embeds is not None:
-                inputs_embeds_list.append(prompt_embeds)
-                attention_mask_list.append(prompt_mask)
-                target_list.append(prompt_target)
-            inputs_embeds_list.extend([speech_embeds, speech_token_labels_embeds])
-            attention_mask_list.extend([speech_masks, speech_token_labels_mask])
-            target_list.extend([speech_target,  speech_token_labels_target])
-        elif output_type == "text":
+        if output_type == "text":
             labels = batch['target'].to(device)
             labels_lengths = batch['target_lengths'].to(device)
             labels_embeds, labels_target, labels_mask = self.get_label_embedding(labels, labels_lengths)
@@ -273,34 +216,14 @@ class LLMASR_Model(nn.Module):
         target = torch.cat(target_list, dim=1)
         position_ids = attention_mask.long().cumsum(-1) - 1
         position_ids.masked_fill_(attention_mask == 0, 1)
-        if output_type == 'text':
-            outputs = self.llama_model(
-                inputs_embeds=inputs_embeds,
-                labels=target,
-                attention_mask=attention_mask,
-                position_ids=position_ids.to(inputs_embeds.device)
-            )
-            loss = outputs['loss']
-            return {"loss": loss}
-        else:
-            outputs = self.llama_model(
-                inputs_embeds=inputs_embeds,
-                # labels=target,
-                attention_mask=attention_mask,
-                position_ids=position_ids.to(inputs_embeds.device)
-            )
-            hidden_states = outputs['hidden_states'][-1]
-            logits = self.lm_head(hidden_states)
-            logits2 = self.speaker_head(hidden_states)  # speech_head
-            combined_logits = torch.cat([logits, logits2], dim=-1)
-            shift_logits = combined_logits[..., :-1, :].contiguous()
-            shift_target = target[..., 1:].contiguous()
-            shift_logits = shift_logits.view(-1, combined_logits.shape[-1])  # 注意这里维度的调整，根据logits2的维度相应改变
-            shift_target = shift_target.view(-1)
-            shift_target = shift_target.to(shift_logits.device)
-            loss = self.loss_fct(shift_logits, shift_target)
-            loss.requires_grad_(True)
-            return {"loss": loss}
+        outputs = self.llama_model(
+            inputs_embeds=inputs_embeds,
+            labels=target,
+            attention_mask=attention_mask,
+            position_ids=position_ids.to(inputs_embeds.device)
+        )
+        loss = outputs['loss']
+        return {"loss": loss}
 
     def generate(
             self,
@@ -322,7 +245,7 @@ class LLMASR_Model(nn.Module):
             embeds = torch.cat([prompt_embeds, speech_embeds], dim=1)
         else:
             embeds = speech_embeds
-        
+
         atts = torch.ones(embeds.size()[:-1], dtype=torch.long).to(embeds.device)
 
         if self.embed_tokens.weight.dtype == torch.float16 or self.embed_tokens.weight.dtype == torch.bfloat16:
@@ -349,45 +272,6 @@ class LLMASR_Model(nn.Module):
 
         return output_text
 
-    def generate4speech_token(
-            self,
-            wavs,
-            wavs_len,
-            prompt,
-    ):
-        speech_embeds, speech_masks = self.get_embedding_from_wav(wavs, wavs_len)
-        speech_embeds, speech_masks, _ = self._add_bos_eos(0 + self.speech_token_num, 1 + self.speech_token_num,
-                                                           speech_embeds, speech_masks, None)
-        prompt = self.tokenizer([prompt], return_tensors="pt"
-                                )['input_ids'].to(speech_embeds.device)
-        prompt_embeds = self.embed_tokens(prompt)
-
-        embeds = torch.cat([prompt_embeds, speech_embeds], dim=1)
-        atts = torch.ones(embeds.size()[:-1], dtype=torch.long).to(embeds.device)
-
-        if self.embed_tokens.weight.dtype == torch.float16:
-            utils_file.logging_limit_print('generate(): self.embed_tokens.weight.dtype == torch.float16')
-            embeds = embeds.to(torch.float16)
-            atts = atts.half()
-
-        outputs = self.llama_model.generate(
-            inputs_embeds=embeds,
-            max_new_tokens=self.max_length,
-            num_beams=self.num_beams,
-            do_sample=self.do_sample,
-            min_length=self.min_length,
-            top_p=self.top_p,
-            top_k=self.top_k,
-            repetition_penalty=self.repetition_penalty,
-            length_penalty=self.length_penalty,
-            temperature=self.temperature,
-            attention_mask=atts,
-            eos_token_id=151643,
-            pad_token_id=-100,
-        )
-        output_text = self.tokenizer.batch_decode(outputs, add_special_tokens=False, skip_special_tokens=True)
-
-        return output_text
 
     def get_embedding_from_wav(self, wavs, wavs_len):
         """
@@ -449,148 +333,3 @@ class LLMASR_Model(nn.Module):
 
         return inputs_embeds, attention_mask, target
 
-    def infer_for_speech2text_token(  # speech2text-token
-            self,
-            wavs,
-            wavs_len,
-            prompt,
-            text=None,
-    ):
-        if text is not None:
-            prompt = torch.cat((prompt, text), dim=1)
-        speech_embeds, speech_masks = self.get_embedding_from_wav(wavs, wavs_len)
-        speech_embeds, speech_masks, _ = self._add_bos_eos(0 + self.speech_token_num, None,
-                                                           speech_embeds, speech_masks, None)
-        prompt = self.tokenizer([prompt], return_tensors="pt"
-                                )['input_ids'].to(speech_embeds.device)
-        prompt_embeds = self.embed_tokens(prompt)
-        embeds = torch.cat([prompt_embeds, speech_embeds], dim=1)
-        atts = torch.ones(embeds.size()[:-1], dtype=torch.long).to(embeds.device)
-        if self.embed_tokens.weight.dtype == torch.float16:
-            utils_file.logging_limit_print('generate(): self.embed_tokens.weight.dtype == torch.float16')
-            embeds = embeds.to(torch.float16)
-            atts = atts.half()
-        device = wavs.device
-
-        max_len = 300
-        hyps = torch.ones([1, 1], dtype=torch.int64,
-                          device=device).fill_(1 + self.speech_token_num)  # (B*N, 1)
-        llm_out = self.llama_model(
-            inputs_embeds=embeds,
-            past_key_values=None,
-            output_hidden_states=True
-        )
-        cache = llm_out.past_key_values
-        utils_file.logging_limit_print('得到首个cache,开始进行for循环推理')
-        token_emb = self.speech_token_emded(hyps[:, -1:])
-
-        for i in range(max_len):
-            llm_out = self.llama_model(
-                inputs_embeds=token_emb,
-                past_key_values=cache,
-                output_hidden_states=True
-            )
-            cache = llm_out.past_key_values
-            hidden_states = llm_out.hidden_states[-1] 
-            token_logits_1 = self.lm_head(hidden_states)
-            token_logits_2 = self.speaker_head(hidden_states)
-            big_logits = torch.cat([token_logits_1, token_logits_2], dim=-1)
-            logp = torch.nn.functional.log_softmax(big_logits[:, -1, :], dim=-1)  
-            max_index = torch.argmax(logp, dim=-1, keepdim=True)
-            utils_file.logging_limit_print(f'max_index:{max_index}')
-
-            hyps = torch.cat((hyps, max_index),
-                             dim=1)  # (B*N, i+1)
-            if max_index < 152064:
-                token_emb = self.embed_tokens(hyps[:, -1:])
-            else:
-                if max_index == 152064 + 4096:
-                    utils_file.logging_limit_print(f'耿雪龙 遇到token结束符号，结束')
-                    break
-                token_emb = self.speech_token_emded(hyps[:, -1:])
-        best_hyps = hyps[0, :]
-        text_res = []
-        token_res = []
-        for i in best_hyps[1:]:
-            if i < 152064:
-                text_res.append(i)
-            else:
-                token_res.append(str((i - 152064).item()))
-        str_i = self.tokenizer.decode(text_res, skip_special_tokens=True, add_special_tokens=False)
-        return [str_i + " | " + " ".join(token_res)]
-
-    def infer_for_text2token(  # text2token
-            self,
-            wavs,
-            wavs_len,
-            prompt,
-            text=None,
-    ):
-        if text is not None:
-            prompt = torch.cat((prompt, text), dim=1)
-        labels_lengths = torch.tensor([len(text)-1], dtype=torch.int64)
-        labels = text[:,:-1]
-        labels_pad_mask = make_pad_mask(labels_lengths)  # B, L
-        labels = labels.masked_fill(labels_pad_mask, 0)
-        speech_embeds = self.embed_tokens(labels)  # B, L, D
-        speech_target = torch.full(labels_pad_mask.shape, self.IGNORE_ID).to(
-            speech_embeds.device)
-        speech_masks = ~labels_pad_mask
-
-        prompt = self.tokenizer([prompt], return_tensors="pt"
-                                )['input_ids'].to(speech_embeds.device)
-        prompt_embeds = self.embed_tokens(prompt)
-        embeds = torch.cat([prompt_embeds, speech_embeds], dim=1)
-        atts = torch.ones(embeds.size()[:-1], dtype=torch.long).to(embeds.device)
-        if self.embed_tokens.weight.dtype == torch.float16:
-            utils_file.logging_limit_print('generate(): self.embed_tokens.weight.dtype == torch.float16')
-            embeds = embeds.to(torch.float16)
-            atts = atts.half()
-        device = wavs.device
-
-        max_len = 300
-        hyps = torch.ones([1, 1], dtype=torch.int64,
-                          device=device).fill_()  # (B*N, 1)
-        llm_out = self.llama_model(
-            inputs_embeds=embeds,
-            past_key_values=None,
-            output_hidden_states=True
-        )
-        cache = llm_out.past_key_values
-        utils_file.logging_limit_print('得到首个cache,开始进行for循环推理')
-        token_emb = self.embed_tokens(hyps[:, -1:])
-
-        for i in range(max_len):
-            llm_out = self.llama_model(
-                inputs_embeds=token_emb,
-                past_key_values=cache,
-                output_hidden_states=True
-            )
-            cache = llm_out.past_key_values
-            hidden_states = llm_out.hidden_states[-1]  # 最后一层的
-            token_logits_1 = self.lm_head(hidden_states)
-            token_logits_2 = self.speaker_head(hidden_states)
-            big_logits = torch.cat([token_logits_1, token_logits_2], dim=-1)
-            logp = torch.nn.functional.log_softmax(big_logits[:, -1, :], dim=-1)  # 取了最后一个
-            max_index = torch.argmax(logp, dim=-1, keepdim=True)
-            utils_file.logging_limit_print(f'max_index:{max_index}')
-
-            hyps = torch.cat((hyps, max_index),
-                             dim=1)  # (B*N, i+1)
-            if max_index < 152064:
-                token_emb = self.embed_tokens(hyps[:, -1:])
-            else:
-                if max_index == 152064 + 4096 :
-                    utils_file.logging_limit_print(f'遇到token结束符号，结束')
-                    break
-                token_emb = self.speech_token_emded(hyps[:, -1:])
-        best_hyps = hyps[0, :]
-        text_res = []
-        token_res = []
-        for i in best_hyps[1:]:
-            if i < 152064:
-                text_res.append(i)
-            else:
-                token_res.append(str((i - 152064).item()))
-        str_i = self.tokenizer.decode(text_res, skip_special_tokens=True, add_special_tokens=False)
-        return [str_i + " | " + " ".join(token_res)]
